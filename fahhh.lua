@@ -94,6 +94,7 @@ getgenv().Psalms = {
 	smoothness = 0.900,
 	TracerEnabled = false,
     AutoUnlock = true,
+    UseMouseHit = false,
 }
 
 
@@ -114,7 +115,7 @@ LeftGroupBox:AddToggle('Enabled', {
 })
 
 LeftGroupBox:AddToggle('AutoUnlock', {
-    Text = 'Auto Unlock',
+    Text = 'Auto Unlock (on death / low HP)',
     Default = getgenv().Psalms.AutoUnlock,
     Callback = function(Value)
         getgenv().Psalms.AutoUnlock = Value
@@ -266,12 +267,12 @@ RightGroupBox:AddDropdown('SelectedPart', {
 
 local RightGroupBox99 = Tabs.Main:AddRightGroupbox('Silent Aim')
 
-RightGroupBox99:AddToggle('Si9282829382991lent', {
-	Text = 'Silent Aim',
-	Default = getgenv().Psalms.SilentAim,
-	Callback = function(Value)
-		getgenv().Psalms.SilentAim = Value
-	end
+RightGroupBox99:AddToggle('SilentAimNew', {
+    Text = 'Silent Aim (Mouse.Hit - NEW!)',
+    Default = false,
+    Callback = function(Value)
+        getgenv().Psalms.UseMouseHitSilent = Value
+    end
 })
 
 RightGroupBox99:AddToggle('Silen3838322222182891929t', {
@@ -706,7 +707,49 @@ mt.__namecall = newcclosure(function(...)
 end)
 
 setreadonly(mt, true)
-
+-- =====================================
+-- NEW MOUSE.HIT SILENT AIM (Replaces Old!)
+-- H Pred (X/Z), V Pred (Y), Jump, Right Offset 0.3
+-- =====================================
+local mouse = game.Players.LocalPlayer:GetMouse()
+local oldIndex
+oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
+    if not checkcaller() 
+        and t == mouse 
+        and (k == "Hit" or k == "Target") 
+        and getgenv().Psalms.UseMouseHitSilent
+        and Plr 
+        and Plr.Character 
+        and Plr.Character:FindFirstChild(getgenv().Psalms.SelectedPart)
+    then
+        local partName = getgenv().Psalms.SelectedPart
+        local targetPart = Plr.Character[partName]
+        
+        if k == "Target" then
+            return targetPart  -- Fake hit part
+        end
+        
+        -- FULL PREDICTION MAGIC! 🎇
+        local vel = targetPart.Velocity
+        local hPred = getgenv().Psalms.HorizontalPrediction  -- Your H slider (X/Z)!
+        local vPred = getgenv().Psalms.VerticalPrediction    -- Your V slider (Y)!
+        local jumpOff = getgenv().Psalms.jumpoffset or 0     -- Your Jump slider!
+        
+        -- Predict X (left/right), Y (up/down), Z (forward/back)
+        local predX = targetPart.Position.X + (vel.X * hPred)
+        local predY = targetPart.Position.Y + (vel.Y * vPred) + jumpOff
+        local predZ = targetPart.Position.Z + (vel.Z * hPred)
+        
+        local predictedPos = Vector3.new(predX, predY, predZ)
+        
+        -- + Right Shoulder Nudge (your 0.3!)
+        local rightOffset = targetPart.CFrame.RightVector * 0.3
+        
+        return CFrame.new(predictedPos + rightOffset)
+    end
+    
+    return oldIndex(t, k)
+end))
 local Stas = game:GetService("Stats")
 
 local RunService = game:GetService("RunService")
