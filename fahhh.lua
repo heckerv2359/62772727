@@ -275,15 +275,6 @@ RightGroupBox99:AddToggle('SilentAimNew', {
     end
 })
 
-RightGroupBox99:AddInput('Fov Si9182819ze', {
-	Default = tostring(getgenv().FOVSize or 25),
-	Numeric = true,
-	Text = 'Fov Size',
-	Callback = function(Value)
-		getgenv().FOVSize = tonumber(Value)
-	end
-})
-
 local RightGroupBox2 = Tabs.Main:AddRightGroupbox('Anti Lock')
 
 RightGroupBox2:AddToggle('AntiEnabled', {
