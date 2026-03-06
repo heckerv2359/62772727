@@ -268,21 +268,12 @@ RightGroupBox:AddDropdown('SelectedPart', {
 local RightGroupBox99 = Tabs.Main:AddRightGroupbox('Silent Aim')
 
 RightGroupBox99:AddToggle('SilentAimNew', {
-    Text = 'Silent Aim (Mouse.Hit - NEW!)',
+    Text = 'Silent Aim',
     Default = false,
     Callback = function(Value)
         getgenv().Psalms.UseMouseHitSilent = Value
     end
 })
-
-RightGroupBox99:AddToggle('Silen3838322222182891929t', {
-	Text = 'Fov',
-	Default = false,
-	Callback = function(Value)
-		getgenv().ShowFOV = Value
-	end
-})
-
 
 RightGroupBox99:AddInput('Fov Si9182819ze', {
 	Default = tostring(getgenv().FOVSize or 25),
@@ -707,10 +698,7 @@ mt.__namecall = newcclosure(function(...)
 end)
 
 setreadonly(mt, true)
--- =====================================
--- NEW MOUSE.HIT SILENT AIM (Replaces Old!)
--- H Pred (X/Z), V Pred (Y), Jump, Right Offset 0.3
--- =====================================
+
 local mouse = game.Players.LocalPlayer:GetMouse()
 local oldIndex
 oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
@@ -731,18 +719,14 @@ oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
         
         -- FULL PREDICTION MAGIC! 🎇
         local vel = targetPart.Velocity
-        local hPred = getgenv().Psalms.HorizontalPrediction  -- Your H slider (X/Z)!
-        local vPred = getgenv().Psalms.VerticalPrediction    -- Your V slider (Y)!
-        local jumpOff = getgenv().Psalms.jumpoffset or 0     -- Your Jump slider!
-        
-        -- Predict X (left/right), Y (up/down), Z (forward/back)
+        local hPred = getgenv().Psalms.HorizontalPrediction  
+        local vPred = getgenv().Psalms.VerticalPrediction    
+        local jumpOff = getgenv().Psalms.jumpoffset or 0     
         local predX = targetPart.Position.X + (vel.X * hPred)
         local predY = targetPart.Position.Y + (vel.Y * vPred) + jumpOff
         local predZ = targetPart.Position.Z + (vel.Z * hPred)
         
         local predictedPos = Vector3.new(predX, predY, predZ)
-        
-        -- + Right Shoulder Nudge (your 0.3!)
         local rightOffset = targetPart.CFrame.RightVector * 0.3
         
         return CFrame.new(predictedPos + rightOffset)
