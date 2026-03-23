@@ -95,6 +95,9 @@ getgenv().Psalms = {
 	TracerEnabled = false,
     AutoUnlock = true,
     UseMouseHit = false,
+	SilentHorizontalPrediction = 0.1,
+	SilentVerticalPrediction = 0.1,
+	SilentSelectedPart = "HumanoidRootPart",
 }
 
 
@@ -285,6 +288,34 @@ RightGroupBox2:AddToggle('AntiEnabled', {
 	end
 })
 
+RightGroupBox99:AddInput('SilentHorizontalPrediction', {
+	Default = tostring(getgenv().Psalms.SilentHorizontalPrediction),
+	Numeric = true,
+	Text = 'Silent Horizontal Prediction',
+	Callback = function(Value)
+		getgenv().Psalms.SilentHorizontalPrediction = tonumber(Value)
+	end
+})
+
+RightGroupBox99:AddInput('SilentVerticalPrediction', {
+	Default = tostring(getgenv().Psalms.SilentVerticalPrediction),
+	Numeric = true,
+	Text = 'Silent Vertical Prediction',
+	Callback = function(Value)
+		getgenv().Psalms.SilentVerticalPrediction = tonumber(Value)
+	end
+})
+
+RightGroupBox99:AddDropdown('SilentSelectedPart', {
+	Values = { 'Head', 'LowerTorso', 'UpperTorso', 'HumanoidRootPart' },
+	Default = getgenv().Psalms.SilentSelectedPart == 'Head' and 1 or
+		getgenv().Psalms.SilentSelectedPart == 'LowerTorso' and 2 or
+		getgenv().Psalms.SilentSelectedPart == 'UpperTorso' and 3 or 4,
+	Text = 'Silent Target Part',
+	Callback = function(Value)
+		getgenv().Psalms.SilentSelectedPart = Value
+	end
+})
 
 RightGroupBox2:AddDropdown('SelectedMode', {
 	Values = { 'Predbreaker', 'Sky', 'Ground' },
@@ -701,7 +732,7 @@ oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
         and Plr.Character 
         and Plr.Character:FindFirstChild(getgenv().Psalms.SelectedPart)
     then
-        local partName = getgenv().Psalms.SelectedPart
+        local partName = getgenv().Psalms.SilentSelectedPart
         local targetPart = Plr.Character[partName]
         
         if k == "Target" then
@@ -710,8 +741,8 @@ oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
         
         -- FULL PREDICTION MAGIC! 🎇
         local vel = targetPart.Velocity
-        local hPred = getgenv().Psalms.HorizontalPrediction  
-        local vPred = getgenv().Psalms.VerticalPrediction    
+        local hPred = getgenv().Psalms.SilentHorizontalPrediction
+        local vPred = getgenv().Psalms.SilentVerticalPrediction   
         local jumpOff = getgenv().Psalms.jumpoffset or 0     
         local predX = targetPart.Position.X + (vel.X * hPred)
         local predY = targetPart.Position.Y + (vel.Y * vPred) + jumpOff
