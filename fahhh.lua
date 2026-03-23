@@ -383,7 +383,7 @@ ESPLeft:AddToggle('HealthESP', {
 })
 
 ESPLeft:AddToggle('TracerESP', {
-	Text = 'Tracer ESP (lines to every player)',
+	Text = 'Tracer ESP',
 	Default = getgenv().Psalms.TracerESP,
 	Callback = function(Value)
 		getgenv().Psalms.TracerESP = Value
@@ -391,7 +391,7 @@ ESPLeft:AddToggle('TracerESP', {
 })
 
 ESPLeft:AddToggle('DistanceESP', {
-	Text = 'Distance ESP',
+	Text = 'Distance ESP (Under)',
 	Default = getgenv().Psalms.DistanceESP,
 	Callback = function(Value)
 		getgenv().Psalms.DistanceESP = Value
