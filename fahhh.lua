@@ -1293,7 +1293,7 @@ RunService.RenderStepped:Connect(function()
 					
 					local dist = math.floor((Camera.CFrame.Position - root.Position).Magnitude / 3.28)
 					drawings.Distance.Text = tostring(dist) .. " studs"
-					drawings.Distance.Position = Vector2.new(pos.X, pos.Y + boxHeight + 8)
+					drawings.Distance.Position = Vector2.new(pos.X, pos.Y + boxHeight + 2)
 					drawings.Distance.Visible = getgenv().Psalms.DistanceESP
 				else
 					hideESP(player)
