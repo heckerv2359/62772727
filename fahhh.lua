@@ -1201,7 +1201,7 @@ local function getESP(player)
 		local d = espCache[player]
 		d.Box.Thickness = 1.5
 		d.Box.Filled = false
-		d.Box.Color = Color3.fromRGB(255, 0, 0)
+		d.Box.Color = Color3.fromRGB(0, 102, 255)
 
 		d.Name.Size = 14
 		d.Name.Center = true
@@ -1216,7 +1216,7 @@ local function getESP(player)
 		d.HealthBar.Color = Color3.fromRGB(0, 255, 0)
 
 		d.Tracer.Thickness = 1.5
-		d.Tracer.Color = Color3.fromRGB(0, 255, 255)
+		d.Tracer.Color = Color3.fromRGB(0, 255, 0)
 
 		d.Distance.Size = 13
 		d.Distance.Center = true
@@ -1249,11 +1249,19 @@ RunService.RenderStepped:Connect(function()
 
 				if onScreen then
 					
-					local top = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 0.5, 0))
-					local bottom = Camera:WorldToViewportPoint(root.Position - Vector3.new(0, 2.5, 0))
-					local boxHeight = top.Y - bottom.Y
-					local boxWidth = boxHeight * 0.6
-					local boxPos = Vector2.new(pos.X - boxWidth/2, top.Y)
+					local headPos = head.Position + Vector3.new(0, 1, 0)   -- a bit above head
+					local feetPos = root.Position - Vector3.new(0, 3.5, 0) -- below feet
+					
+					local top = Camera:WorldToViewportPoint(headPos)
+					local bottom = Camera:WorldToViewportPoint(feetPos)
+					
+					local boxHeight = math.abs(top.Y - bottom.Y)
+					local boxWidth = boxHeight * 0.55   -- slightly narrower looks cleaner
+					
+					local boxX = pos.X - boxWidth / 2
+					local boxY = math.min(top.Y, bottom.Y)  -- always start from the top point
+					
+					local boxPos = Vector2.new(boxX, boxY)
 
 					
 					drawings.Box.Size = Vector2.new(boxWidth, boxHeight)
@@ -1269,7 +1277,9 @@ RunService.RenderStepped:Connect(function()
 					local hpPercent = hum.Health / hum.MaxHealth
 					drawings.HealthOutline.Size = Vector2.new(4, boxHeight)
 					drawings.HealthOutline.Position = Vector2.new(boxPos.X - 6, boxPos.Y)
-					drawings.HealthOutline.Visible = getgenv().Psalms.HealthESP
+					
+					drawings.HealthBar.Size = Vector2.new(2, boxHeight * hpPercent)
+					drawings.HealthBar.Position = Vector2.new(boxPos.X - 6, boxPos.Y + boxHeight * (1 - hpPercent))
 
 					drawings.HealthBar.Size = Vector2.new(2, boxHeight * hpPercent)
 					drawings.HealthBar.Position = Vector2.new(boxPos.X - 6, boxPos.Y + boxHeight * (1 - hpPercent))
