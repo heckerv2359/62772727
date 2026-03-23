@@ -268,10 +268,10 @@ RightGroupBox:AddDropdown('SelectedPart', {
 	end
 })
 
-local RightGroupBox99 = Tabs.Main:AddRightGroupbox('Silent Aim')
+local RightGroupBox99 = Tabs.Main:AddRightGroupbox('Silent/Target Aim')
 
 RightGroupBox99:AddToggle('SilentAimNew', {
-    Text = 'Silent/Target Aim',
+    Text = 'Silent Aim',
     Default = false,
     Callback = function(Value)
         getgenv().Psalms.UseMouseHitSilent = Value
