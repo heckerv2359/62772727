@@ -386,7 +386,7 @@ ESPGroup:AddToggle('DistanceESP', {
 	end
 })
 
-local ChecksGroup = Tabs.Misc:AddRightGroupbox('Target Checks')
+local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
 
 ChecksGroup:AddToggle('FriendCheck', {
 	Text = 'Friend Check',
