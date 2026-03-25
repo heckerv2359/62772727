@@ -115,6 +115,7 @@ getgenv().Psalms = {
 	TriggerWallCheck = true,
 	TriggerKOCheck = true,
 	LockNotifications = true,
+	NotificationNameType = "DisplayName",
 }
 
 
@@ -499,10 +500,19 @@ TriggerGroup:AddSlider('TriggerFOVSize', {
 local NotifyGroup = Tabs.Misc2:AddLeftGroupbox('Notifications')
 
 NotifyGroup:AddToggle('LockNotifications', {
-    Text = 'Lock / Unlock Notifications',
+    Text = 'Enable Lock/Unlock Notifications',
     Default = getgenv().Psalms.LockNotifications,
     Callback = function(Value)
         getgenv().Psalms.LockNotifications = Value
+    end
+})
+
+NotifyGroup:AddDropdown('NotificationNameType', {
+    Values = { 'DisplayName', 'Username' },
+    Default = 1, -- 1 = DisplayName
+    Text = 'Show Name As',
+    Callback = function(Value)
+        getgenv().Psalms.NotificationNameType = Value
     end
 })
 
@@ -787,17 +797,20 @@ end
 local function toggleLock()
 	if enabled then
 		enabled = false
+		local oldTarget = Plr
 		Plr = nil
 		destroyTracer()
 
 		if getgenv().Psalms.LockNotifications then
-			Library:Notify({
-				Text = "Unlocked",
-				Duration = 2
-			})
+			local name = oldTarget and (getgenv().Psalms.NotificationNameType == "DisplayName" 
+				and (oldTarget.DisplayName or oldTarget.Name) 
+				or oldTarget.Name) or "Unknown"
+
+			Library:Notify("Unlocked from: " .. name)
 		end
 
 	else
+
 		Plr = SigmaOhioPlayer()
 		if Plr then
 			enabled = true
@@ -806,10 +819,11 @@ local function toggleLock()
 			end
 
 			if getgenv().Psalms.LockNotifications then
-				Library:Notify({
-					Text = "Locked On: " .. tostring(Plr.DisplayName or Plr.Name),
-					Duration = 3
-				})
+				local name = (getgenv().Psalms.NotificationNameType == "DisplayName" 
+					and (Plr.DisplayName or Plr.Name) 
+					or Plr.Name)
+
+				Library:Notify("Locked On: " .. name)
 			end
 		end
 	end
