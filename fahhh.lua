@@ -163,14 +163,6 @@ LeftGroupBox:AddToggle('LookAt', {
 	end
 })
 
-LeftGroupBox:AddToggle('resolvert', {
-	Text = 'Resolver',
-	Default = false,
-	Callback = function(Value)
-		getgenv().Psalms.ResolverEnabled = Value
-	end
-})
-
 
 local DickHead = Tabs.Main:AddLeftGroupbox('Camera')
 
@@ -548,7 +540,7 @@ ClosestGroup:AddToggle('AimTracerEnabled', {
 })
 
 
-local ResolverGroup = Tabs.Misc2:AddLeftGroupbox('Resolver')
+local ResolverGroup = Tabs.Misc2:AddRightGroupbox('Resolver')
 
 ResolverGroup:AddToggle('ResolverEnabled', {
     Text = 'Enable Resolver',
