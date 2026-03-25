@@ -114,6 +114,7 @@ getgenv().Psalms = {
 	TriggerFOVShow = false,
 	TriggerWallCheck = true,
 	TriggerKOCheck = true,
+	LockNotifications = true,
 }
 
 
@@ -495,6 +496,16 @@ TriggerGroup:AddSlider('TriggerFOVSize', {
 })
 
 
+local NotifyGroup = Tabs.Misc2:AddLeftGroupbox('Notifications')
+
+NotifyGroup:AddToggle('LockNotifications', {
+    Text = 'Lock / Unlock Notifications',
+    Default = getgenv().Psalms.LockNotifications,
+    Callback = function(Value)
+        getgenv().Psalms.LockNotifications = Value
+    end
+})
+
 SaveManager:SetLibrary(Library)
 ThemeManager:SetLibrary(Library)
 
@@ -777,8 +788,14 @@ local function toggleLock()
 	if enabled then
 		enabled = false
 		Plr = nil
-		destroyTracer()  
+		destroyTracer()
 
+		if getgenv().Psalms.LockNotifications then
+			Library:Notify({
+				Text = "Unlocked",
+				Duration = 2
+			})
+		end
 
 	else
 		Plr = SigmaOhioPlayer()
@@ -788,10 +805,12 @@ local function toggleLock()
 				createTracer(game.Players.LocalPlayer, Plr)  
 			end
 
-			ImageButton.Image = "rbxassetid://78342062013795"
-			Library:Notify("Target Locked: " .. tostring(Plr.Character.Humanoid.DisplayName)
-
-			)
+			if getgenv().Psalms.LockNotifications then
+				Library:Notify({
+					Text = "Locked On: " .. tostring(Plr.DisplayName or Plr.Name),
+					Duration = 3
+				})
+			end
 		end
 	end
 end
