@@ -95,6 +95,11 @@ getgenv().Psalms = {
 	TracerEnabled = false,
     AutoUnlock = true,
     UseMouseHit = false,
+	BoxESP = false,
+	NameESP = false,
+	HealthESP = false,
+	TracerESP = false,
+	DistanceESP = false,
 	SilentHorizontalPrediction = 0.1,
 	SilentVerticalPrediction = 0.1,
 	SilentSelectedPart = "HumanoidRootPart",
@@ -327,6 +332,65 @@ RightGroupBox2:AddDropdown('SelectedMode', {
 	end
 })
 
+local ESPGroup = Tabs.Misc:AddLeftGroupbox('ESP Settings')
+
+ESPGroup:AddToggle('BoxESP', {
+	Text = 'Box ESP',
+	Default = getgenv().Psalms.BoxESP,
+	Callback = function(Value)
+		getgenv().Psalms.BoxESP = Value
+	end
+})
+
+ESPGroup:AddToggle('NameESP', {
+	Text = 'Name ESP',
+	Default = getgenv().Psalms.NameESP,
+	Callback = function(Value)
+		getgenv().Psalms.NameESP = Value
+	end
+})
+
+ESPGroup:AddToggle('HealthESP', {
+	Text = 'Health Bar ESP',
+	Default = getgenv().Psalms.HealthESP,
+	Callback = function(Value)
+		getgenv().Psalms.HealthESP = Value
+	end
+})
+
+ESPGroup:AddToggle('TracerESP', {
+	Text = 'Tracer ESP',
+	Default = getgenv().Psalms.TracerESP,
+	Callback = function(Value)
+		getgenv().Psalms.TracerESP = Value
+	end
+})
+
+ESPGroup:AddToggle('DistanceESP', {
+	Text = 'Distance ESP (Under)',
+	Default = getgenv().Psalms.DistanceESP,
+	Callback = function(Value)
+		getgenv().Psalms.DistanceESP = Value
+	end
+})
+
+local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
+
+ChecksGroup:AddToggle('FriendCheck', {
+	Text = 'Friend Check (ignore friends)',
+	Default = getgenv().Psalms.FriendCheck,
+	Callback = function(Value)
+		getgenv().Psalms.FriendCheck = Value
+	end
+})
+
+ChecksGroup:AddToggle('TeamCheck', {
+	Text = 'Team Check (ignore same team)',
+	Default = getgenv().Psalms.TeamCheck,
+	Callback = function(Value)
+		getgenv().Psalms.TeamCheck = Value
+	end
+})
 
 SaveManager:SetLibrary(Library)
 ThemeManager:SetLibrary(Library)
@@ -351,6 +415,11 @@ game:GetService("RunService").Heartbeat:Connect(function()
 	if character and character:FindFirstChild("HumanoidRootPart") then
 		local humanoidRootPart = character.HumanoidRootPart
 		local vel = humanoidRootPart.Velocity
+
+		if getgenv().cframespeedtoggle == true then
+			humanoidRootPart.CFrame = humanoidRootPart.CFrame +
+				character.Humanoid.MoveDirection * getgenv().speedvalue / 0.5
+		end
 
 		if getgenv().Psalms.AntiEnabled then
 			if getgenv().Psalms.AntiLock == "Predbreaker" then
@@ -518,6 +587,8 @@ function SigmaOhioPlayer()
 
 	for i, v in pairs(game.Players:GetPlayers()) do
 		if v ~= player and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
+			if getgenv().Psalms.FriendCheck and player:IsFriendsWith(v) then continue end
+			if getgenv().Psalms.TeamCheck and v.Team and player.Team and v.Team == player.Team then continue end
 			local pos, onScreen = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
 
 			if onScreen and pos.X > 0 and pos.Y > 0 and pos.X < viewportSize.X and pos.Y < viewportSize.Y then
@@ -1071,6 +1142,12 @@ FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
 local function IsPlayerInFOV(player)
 	if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then
 		return false
+	if getgenv().Psalms.FriendCheck and LocalPlayer:IsFriendsWith(player) then
+		return false
+	end
+	if getgenv().Psalms.TeamCheck and player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
+		return false
+	end
 	end
 
 	local characterRootPart = player.Character.HumanoidRootPart
@@ -1111,4 +1188,130 @@ RunService.RenderStepped:Connect(function()
 end)
 
 
+local espCache = {}
+
+local function getESP(player)
+	if not espCache[player] then
+		espCache[player] = {
+			Box = Drawing.new("Square"),
+			Name = Drawing.new("Text"),
+			HealthOutline = Drawing.new("Square"),
+			HealthBar = Drawing.new("Square"),
+			Tracer = Drawing.new("Line"),
+			Distance = Drawing.new("Text"),
+		}
+		local d = espCache[player]
+		d.Box.Thickness = 1.5
+		d.Box.Filled = false
+		d.Box.Color = Color3.fromRGB(0, 102, 255)
+
+		d.Name.Size = 14
+		d.Name.Center = true
+		d.Name.Outline = true
+		d.Name.Color = Color3.fromRGB(255, 255, 255)
+
+		d.HealthOutline.Size = Vector2.new(4, 0)
+		d.HealthOutline.Filled = false
+		d.HealthOutline.Color = Color3.fromRGB(0, 0, 0)
+
+		d.HealthBar.Filled = true
+		d.HealthBar.Color = Color3.fromRGB(0, 255, 0)
+
+		d.Tracer.Thickness = 1.5
+		d.Tracer.Color = Color3.fromRGB(0, 255, 0)
+
+		d.Distance.Size = 13
+		d.Distance.Center = true
+		d.Distance.Outline = true
+		d.Distance.Color = Color3.fromRGB(255, 255, 255)
+	end
+	return espCache[player]
+end
+
+local function hideESP(player)
+	if espCache[player] then
+		for _, obj in pairs(espCache[player]) do
+			obj.Visible = false
+		end
+	end
+end
+
+RunService.RenderStepped:Connect(function()
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer then
+			local drawings = getESP(player)
+			local char = player.Character
+
+			if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Head") and char:FindFirstChild("Humanoid") then
+				local root = char.HumanoidRootPart
+				local head = char.Head
+				local hum = char.Humanoid
+
+				local pos, onScreen = Camera:WorldToViewportPoint(root.Position)
+
+				if onScreen then
+					
+					local headPos = head.Position + Vector3.new(0, 1, 0)   -- a bit above head
+					local feetPos = root.Position - Vector3.new(0, 3.5, 0) -- below feet
+					
+					local top = Camera:WorldToViewportPoint(headPos)
+					local bottom = Camera:WorldToViewportPoint(feetPos)
+					
+					local boxHeight = math.abs(top.Y - bottom.Y)
+					local boxWidth = boxHeight * 0.55   -- slightly narrower looks cleaner
+					
+					local boxX = pos.X - boxWidth / 2
+					local boxY = math.min(top.Y, bottom.Y)  -- always start from the top point
+					
+					local boxPos = Vector2.new(boxX, boxY)
+
+					
+					drawings.Box.Size = Vector2.new(boxWidth, boxHeight)
+					drawings.Box.Position = boxPos
+					drawings.Box.Visible = getgenv().Psalms.BoxESP
+
+					
+					drawings.Name.Text = player.DisplayName
+					drawings.Name.Position = Vector2.new(pos.X, top.Y - 18)
+					drawings.Name.Visible = getgenv().Psalms.NameESP
+
+					
+					local hpPercent = hum.Health / hum.MaxHealth
+					drawings.HealthOutline.Size = Vector2.new(4, boxHeight)
+					drawings.HealthOutline.Position = Vector2.new(boxPos.X - 6, boxPos.Y)
+					
+					drawings.HealthBar.Size = Vector2.new(2, boxHeight * hpPercent)
+					drawings.HealthBar.Position = Vector2.new(boxPos.X - 6, boxPos.Y + boxHeight * (1 - hpPercent))
+
+					drawings.HealthBar.Size = Vector2.new(2, boxHeight * hpPercent)
+					drawings.HealthBar.Position = Vector2.new(boxPos.X - 6, boxPos.Y + boxHeight * (1 - hpPercent))
+					drawings.HealthBar.Visible = getgenv().Psalms.HealthESP
+
+					
+					drawings.Tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y)
+					drawings.Tracer.To = Vector2.new(pos.X, pos.Y)
+					drawings.Tracer.Visible = getgenv().Psalms.TracerESP
+
+					
+					local dist = math.floor((Camera.CFrame.Position - root.Position).Magnitude / 3.28)
+					drawings.Distance.Text = tostring(dist) .. " studs"
+					drawings.Distance.Position = Vector2.new(pos.X, pos.Y + boxHeight + 2)
+					drawings.Distance.Visible = getgenv().Psalms.DistanceESP
+				else
+					hideESP(player)
+				end
+			else
+				hideESP(player)
+			end
+		end
+	end
+end)
+
+
+Players.PlayerRemoving:Connect(function(player)
+	if espCache[player] then
+		for _, obj in pairs(espCache[player]) do obj:Remove() end
+		espCache[player] = nil
+	end
+end)
 --------------------------
