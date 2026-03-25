@@ -1142,12 +1142,13 @@ FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
 local function IsPlayerInFOV(player)
 	if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then
 		return false
+	end
+
 	if getgenv().Psalms.FriendCheck and LocalPlayer:IsFriendsWith(player) then
 		return false
 	end
 	if getgenv().Psalms.TeamCheck and player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
 		return false
-	end
 	end
 
 	local characterRootPart = player.Character.HumanoidRootPart
@@ -1162,7 +1163,6 @@ local function IsPlayerInFOV(player)
 	end
 	return false
 end
-
 
 RunService.RenderStepped:Connect(function()
 	FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
