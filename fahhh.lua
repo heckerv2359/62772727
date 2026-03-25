@@ -116,6 +116,9 @@ getgenv().Psalms = {
 	TriggerKOCheck = true,
 	LockNotifications = true,
 	NotificationNameType = "DisplayName",
+	ClosestPartEnabled = false,
+	ClosestPartMode = "Camera",
+	AimTracerEnabled = false,
 }
 
 
@@ -500,7 +503,7 @@ TriggerGroup:AddSlider('TriggerFOVSize', {
 local NotifyGroup = Tabs.Misc2:AddLeftGroupbox('Notifications')
 
 NotifyGroup:AddToggle('LockNotifications', {
-    Text = 'Enable Lock/Unlock Notifications',
+    Text = 'Enable Lock Notifications',
     Default = getgenv().Psalms.LockNotifications,
     Callback = function(Value)
         getgenv().Psalms.LockNotifications = Value
@@ -516,6 +519,32 @@ NotifyGroup:AddDropdown('NotificationNameType', {
     end
 })
 
+local ClosestGroup = Tabs.Misc2:AddLeftGroupbox('Closest Part')
+
+ClosestGroup:AddToggle('ClosestPartEnabled', {
+    Text = 'Enable Closest Part',
+    Default = getgenv().Psalms.ClosestPartEnabled,
+    Callback = function(Value)
+        getgenv().Psalms.ClosestPartEnabled = Value
+    end
+})
+
+ClosestGroup:AddDropdown('ClosestPartMode', {
+    Values = { 'Camera', 'Silent' },
+    Default = getgenv().Psalms.ClosestPartMode == 'Camera' and 1 or 2,
+    Text = 'Closest Part Mode',
+    Callback = function(Value)
+        getgenv().Psalms.ClosestPartMode = Value
+    end
+})
+
+ClosestGroup:AddToggle('AimTracerEnabled', {
+    Text = 'Aim Tracer (shows where you aim)',
+    Default = getgenv().Psalms.AimTracerEnabled,
+    Callback = function(Value)
+        getgenv().Psalms.AimTracerEnabled = Value
+    end
+})
 SaveManager:SetLibrary(Library)
 ThemeManager:SetLibrary(Library)
 
@@ -1546,5 +1575,79 @@ end)
 
 RunService.Heartbeat:Connect(TriggerBot)
 
+
+local aimTracer = Drawing.new("Line")
+aimTracer.Thickness = 2
+aimTracer.Color = Color3.fromRGB(255, 0, 255)
+aimTracer.Transparency = 1
+aimTracer.Visible = false
+
+local function GetClosestPart(character)
+    if not character then return nil end
+    local closestPart = nil
+    local shortestDist = math.huge
+    local camera = workspace.CurrentCamera
+    local screenCenter = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") and part.Transparency < 1 then
+            local pos, onScreen = camera:WorldToViewportPoint(part.Position)
+            if onScreen then
+                local dist = (Vector2.new(pos.X, pos.Y) - screenCenter).Magnitude
+                if dist < shortestDist then
+                    shortestDist = dist
+                    closestPart = part
+                end
+            end
+        end
+    end
+    return closestPart
+end
+
+
+RunService.RenderStepped:Connect(function()
+    local target = Plr  -- Your current locked target
+    if not target or not target.Character then 
+        aimTracer.Visible = false
+        return 
+    end
+
+    local useClosest = getgenv().Psalms.ClosestPartEnabled
+    local mode = getgenv().Psalms.ClosestPartMode
+
+    local finalPart = nil
+    local aimPosition = nil
+
+    if useClosest then
+        finalPart = GetClosestPart(target.Character)
+    else
+        local partName = (mode == "Camera") and getgenv().Psalms.SelectedPart or getgenv().Psalms.SilentSelectedPart
+        finalPart = target.Character:FindFirstChild(partName)
+    end
+
+    if finalPart then
+        aimPosition = finalPart.Position
+
+        -- Update CamLock or Silent if needed (you can expand this later)
+        if mode == "Camera" and getgenv().Psalms.Camera then
+            -- CamLock already uses SelectedPart, but you can override here if wanted
+        end
+    end
+
+
+    if getgenv().Psalms.AimTracerEnabled and aimPosition then
+        local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if myRoot then
+            local fromPos = workspace.CurrentCamera:WorldToViewportPoint(myRoot.Position)
+            local toPos   = workspace.CurrentCamera:WorldToViewportPoint(aimPosition)
+
+            aimTracer.From = Vector2.new(fromPos.X, fromPos.Y)
+            aimTracer.To   = Vector2.new(toPos.X, toPos.Y)
+            aimTracer.Visible = true
+        end
+    else
+        aimTracer.Visible = false
+    end
+end)
 
 --------------------------
