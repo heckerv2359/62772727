@@ -422,6 +422,14 @@ TriggerGroup:AddToggle('TriggerEnabled', {
     end
 })
 
+TriggerGroup:AddToggle('TriggerEnabled', {
+    Text = 'Enable Trigger Bot',
+    Default = getgenv().Psalms.TriggerEnabled,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerEnabled = Value
+    end
+})
+
 TriggerGroup:AddToggle('TriggerFOVShow', {
     Text = 'Show FOV Circle',
     Default = getgenv().Psalms.TriggerFOVShow,
@@ -431,7 +439,7 @@ TriggerGroup:AddToggle('TriggerFOVShow', {
 })
 
 TriggerGroup:AddToggle('TriggerKOCheck', {
-    Text = 'KO Check',
+    Text = 'KO Check (don\'t shoot downed players)',
     Default = getgenv().Psalms.TriggerKOCheck,
     Callback = function(Value)
         getgenv().Psalms.TriggerKOCheck = Value
