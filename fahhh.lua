@@ -1577,8 +1577,8 @@ RunService.Heartbeat:Connect(TriggerBot)
 
 
 local aimTracer = Drawing.new("Line")
-aimTracer.Thickness = 2
-aimTracer.Color = Color3.fromRGB(255, 0, 255)
+aimTracer.Thickness = 2.5
+aimTracer.Color = Color3.fromRGB(0, 170, 255)   -- Light Blue
 aimTracer.Transparency = 1
 aimTracer.Visible = false
 
@@ -1603,20 +1603,17 @@ local function GetClosestPart(character)
     end
     return closestPart
 end
-
-
 RunService.RenderStepped:Connect(function()
-    local target = Plr  -- Your current locked target
-    if not target or not target.Character then 
+    local target = Plr
+    if not target or not target.Character or not getgenv().Psalms.AimTracerEnabled then
         aimTracer.Visible = false
-        return 
+        return
     end
 
     local useClosest = getgenv().Psalms.ClosestPartEnabled
     local mode = getgenv().Psalms.ClosestPartMode
 
     local finalPart = nil
-    local aimPosition = nil
 
     if useClosest then
         finalPart = GetClosestPart(target.Character)
@@ -1625,26 +1622,30 @@ RunService.RenderStepped:Connect(function()
         finalPart = target.Character:FindFirstChild(partName)
     end
 
-    if finalPart then
-        aimPosition = finalPart.Position
+    if not finalPart then
+        aimTracer.Visible = false
+        return
+    end
+    local myChar = LocalPlayer.Character
+    local startPart = myChar and (myChar:FindFirstChild("HumanoidRootPart") or myChar:FindFirstChild("Head"))
 
-        -- Update CamLock or Silent if needed (you can expand this later)
-        if mode == "Camera" and getgenv().Psalms.Camera then
-            -- CamLock already uses SelectedPart, but you can override here if wanted
-        end
+    if not startPart then
+        aimTracer.Visible = false
+        return
     end
 
+    local startPos3D = startPart.Position
+    local endPos3D   = finalPart.Position
 
-    if getgenv().Psalms.AimTracerEnabled and aimPosition then
-        local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        if myRoot then
-            local fromPos = workspace.CurrentCamera:WorldToViewportPoint(myRoot.Position)
-            local toPos   = workspace.CurrentCamera:WorldToViewportPoint(aimPosition)
 
-            aimTracer.From = Vector2.new(fromPos.X, fromPos.Y)
-            aimTracer.To   = Vector2.new(toPos.X, toPos.Y)
-            aimTracer.Visible = true
-        end
+    local startScreen = workspace.CurrentCamera:WorldToViewportPoint(startPos3D)
+    local endScreen   = workspace.CurrentCamera:WorldToViewportPoint(endPos3D)
+
+
+    if startScreen.Z > 0 and endScreen.Z > 0 then
+        aimTracer.From = Vector2.new(startScreen.X, startScreen.Y)
+        aimTracer.To   = Vector2.new(endScreen.X, endScreen.Y)
+        aimTracer.Visible = true
     else
         aimTracer.Visible = false
     end
