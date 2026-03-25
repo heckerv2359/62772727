@@ -411,7 +411,7 @@ ChecksGroup:AddToggle('WallCheck', {
 })
 
 
-local TriggerGroup = Tabs.Misc:AddRightGroupbox('Trigger Bot')
+local TriggerGroup = Tabs.Misc:AddLeftGroupbox('Trigger Bot')
 
 TriggerGroup:AddToggle('TriggerEnabled', {
     Text = 'Enable Trigger Bot',
@@ -437,48 +437,58 @@ TriggerGroup:AddToggle('TriggerKOCheck', {
     end
 })
 
-TriggerGroup:AddInput('TriggerDelay', {
+TriggerGroup:AddSlider('TriggerDelay', {
     Text = 'Shoot Delay',
-    Default = tostring(getgenv().Psalms.TriggerDelay),
-    Numeric = true,
+    Default = getgenv().Psalms.TriggerDelay,
+    Min = 0,
+    Max = 1,
+    Rounding = 2,
     Callback = function(Value)
-        getgenv().Psalms.TriggerDelay = tonumber(Value) or 0.2
+        getgenv().Psalms.TriggerDelay = Value
     end
 })
 
-TriggerGroup:AddInput('TriggerTapDelay', {
+TriggerGroup:AddSlider('TriggerTapDelay', {
     Text = 'Tap Delay',
-    Default = tostring(getgenv().Psalms.TriggerTapDelay),
-    Numeric = true,
+    Default = getgenv().Psalms.TriggerTapDelay,
+    Min = 0,
+    Max = 0.1,
+    Rounding = 3,
     Callback = function(Value)
-        getgenv().Psalms.TriggerTapDelay = tonumber(Value) or 0.01
+        getgenv().Psalms.TriggerTapDelay = Value
     end
 })
 
-TriggerGroup:AddInput('TriggerTolerance', {
+TriggerGroup:AddSlider('TriggerTolerance', {
     Text = 'Tolerance (how close to crosshair)',
-    Default = tostring(getgenv().Psalms.TriggerTolerance),
-    Numeric = true,
+    Default = getgenv().Psalms.TriggerTolerance,
+    Min = 5,
+    Max = 50,
+    Rounding = 0,
     Callback = function(Value)
-        getgenv().Psalms.TriggerTolerance = tonumber(Value) or 15
+        getgenv().Psalms.TriggerTolerance = Value
     end
 })
 
-TriggerGroup:AddInput('TriggerDistance', {
+TriggerGroup:AddSlider('TriggerDistance', {
     Text = 'Max Distance',
-    Default = tostring(getgenv().Psalms.TriggerDistance),
-    Numeric = true,
+    Default = getgenv().Psalms.TriggerDistance,
+    Min = 50,
+    Max = 500,
+    Rounding = 0,
     Callback = function(Value)
-        getgenv().Psalms.TriggerDistance = tonumber(Value) or 300
+        getgenv().Psalms.TriggerDistance = Value
     end
 })
 
-TriggerGroup:AddInput('TriggerFOVSize', {
+TriggerGroup:AddSlider('TriggerFOVSize', {
     Text = 'FOV Size',
-    Default = tostring(getgenv().Psalms.TriggerFOVSize),
-    Numeric = true,
+    Default = getgenv().Psalms.TriggerFOVSize,
+    Min = 10,
+    Max = 300,
+    Rounding = 0,
     Callback = function(Value)
-        getgenv().Psalms.TriggerFOVSize = tonumber(Value) or 80
+        getgenv().Psalms.TriggerFOVSize = Value
     end
 })
 
