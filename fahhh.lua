@@ -1164,6 +1164,7 @@ local function IsPlayerInFOV(player)
 	return false
 end
 
+
 RunService.RenderStepped:Connect(function()
 	FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
 	FOV.Radius = getgenv().FOVSize
