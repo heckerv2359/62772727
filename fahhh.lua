@@ -283,13 +283,23 @@ RightGroupBox99:AddToggle('SilentAimNew', {
     end
 })
 
-local RightGroupBox2 = Tabs.Main:AddRightGroupbox('Anti Lock')
+local AntiLockGroup = Tabs.Misc:AddLeftGroupbox('Anti Lock')
 
-RightGroupBox2:AddToggle('AntiEnabled', {
-	Text = 'Enable Anti',
-	Default = getgenv().Psalms.AntiEnabled,
+AntiLockGroup:AddToggle('AntiEnabled', {
+	Text = 'Enable Anti Lock',
+	Default = getgenv().Psalms.AntiEnabled or false,
 	Callback = function(Value)
 		getgenv().Psalms.AntiEnabled = Value
+	end
+})
+
+AntiLockGroup:AddDropdown('SelectedMode', {
+	Values = { 'Predbreaker', 'Sky', 'Ground' },
+	Default = getgenv().Psalms.AntiLock == 'Predbreaker' and 1 or
+	          getgenv().Psalms.AntiLock == 'Sky' and 2 or 3,
+	Text = 'Anti Lock Mode',
+	Callback = function(Value)
+		getgenv().Psalms.AntiLock = Value
 	end
 })
 
@@ -322,15 +332,6 @@ RightGroupBox99:AddDropdown('SilentSelectedPart', {
 	end
 })
 
-RightGroupBox2:AddDropdown('SelectedMode', {
-	Values = { 'Predbreaker', 'Sky', 'Ground' },
-	Default = getgenv().Psalms.AntiLock == 'Predbreaker' and 1 or
-		getgenv().Psalms.AntiLock == 'Sky' and 2 or 3,
-	Text = 'Mode Selection',
-	Callback = function(Value)
-		getgenv().Psalms.AntiLock = Value
-	end
-})
 
 local ESPGroup = Tabs.Misc:AddLeftGroupbox('ESP Settings')
 
