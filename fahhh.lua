@@ -377,7 +377,7 @@ ESPGroup:AddToggle('DistanceESP', {
 local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
 
 ChecksGroup:AddToggle('FriendCheck', {
-	Text = 'Friend Check (ignore friends)',
+	Text = 'Friend Check',
 	Default = getgenv().Psalms.FriendCheck,
 	Callback = function(Value)
 		getgenv().Psalms.FriendCheck = Value
@@ -385,7 +385,7 @@ ChecksGroup:AddToggle('FriendCheck', {
 })
 
 ChecksGroup:AddToggle('TeamCheck', {
-	Text = 'Team Check (ignore same team)',
+	Text = 'Team Check',
 	Default = getgenv().Psalms.TeamCheck,
 	Callback = function(Value)
 		getgenv().Psalms.TeamCheck = Value
