@@ -85,6 +85,7 @@ getgenv().Psalms = {
 	VerticalPrediction = 0.1,
 	jumpoffset = -1,
 	ResolverEnabled = false,
+	ResolverType = "Recalculate",
 	SelectedPart = "HumanoidRootPart",
 	AutoPrediction = true,
 	AutoPredMode = "PingBased",  
@@ -545,6 +546,30 @@ ClosestGroup:AddToggle('AimTracerEnabled', {
         getgenv().Psalms.AimTracerEnabled = Value
     end
 })
+
+
+local ResolverGroup = Tabs.Misc2:AddLeftGroupbox('Resolver')
+
+ResolverGroup:AddToggle('ResolverEnabled', {
+    Text = 'Enable Resolver',
+    Default = getgenv().Psalms.ResolverEnabled,
+    Callback = function(Value)
+        getgenv().Psalms.ResolverEnabled = Value
+    end
+})
+
+ResolverGroup:AddDropdown('ResolverType', {
+    Values = { 'Recalculate', 'LookVector', 'MoveDirection', 'ZeroPrediction' },
+    Default = getgenv().Psalms.ResolverType == 'Recalculate' and 1 or
+              getgenv().Psalms.ResolverType == 'LookVector' and 2 or
+              getgenv().Psalms.ResolverType == 'MoveDirection' and 3 or 4,
+    Text = 'Resolver Type',
+    Callback = function(Value)
+        getgenv().Psalms.ResolverType = Value
+    end
+})
+
+
 SaveManager:SetLibrary(Library)
 ThemeManager:SetLibrary(Library)
 
@@ -893,14 +918,17 @@ mt.__namecall = newcclosure(function(...)
 			local targetPart = Plr.Character[selectedPart]
 
 			if targetPart then
-				local velocity
+				local velocity = targetPart.Velocity
 				if getgenv().Psalms.ResolverEnabled then
-					if getgenv().Psalms.RESOLVER == "MoveDirection" then
-						velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
-					elseif getgenv().Psalms.RESOLVER == "LookVector" then
-						velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction * 1.0
-					else
-						velocity = targetPart.Velocity
+					local resolverType = getgenv().Psalms.ResolverType
+						if resolverType == "Recalculate" then
+							velocity = targetPart.Velocity
+					elseif resolverType == "LookVector" then
+						velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction
+					elseif resolverType == "MoveDirection" then
+							velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
+					elseif resolverType == "ZeroPrediction" then
+							velocity = Vector3.new(targetPart.Velocity.X, 0, targetPart.Velocity.Z)
 					end
 				else
 					velocity = targetPart.Velocity
@@ -1115,16 +1143,19 @@ RunService.Heartbeat:Connect(function()
 		local targetPart = Plr.Character[selectedPart]
 
 		if targetPart then
-			local velocity
-			if getgenv().Psalms.ResolverEnabled then
-				if getgenv().Psalms.RESOLVER == "MoveDirection" then
-					velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
-				elseif getgenv().Psalms.RESOLVER == "LookVector" then
-					velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction * 1.0
+			local velocity = targetPart.Velocity
+				if getgenv().Psalms.ResolverEnabled then
+					local resolverType = getgenv().Psalms.ResolverType
+						if resolverType == "Recalculate" then
+							velocity = targetPart.Velocity
+					elseif resolverType == "LookVector" then
+						velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction
+					elseif resolverType == "MoveDirection" then
+							velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
+					elseif resolverType == "ZeroPrediction" then
+							velocity = Vector3.new(targetPart.Velocity.X, 0, targetPart.Velocity.Z)
+					end
 				else
-					velocity = targetPart.Velocity
-				end
-			else
 				velocity = targetPart.Velocity
 			end
 
