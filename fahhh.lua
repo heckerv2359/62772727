@@ -114,6 +114,8 @@ getgenv().Psalms = {
 	TriggerFOVShow = false,
 	TriggerWallCheck = true,
 	TriggerKOCheck = true,
+	FriendCheck = false,
+	TeamCheck = false,
 }
 
 
@@ -386,9 +388,9 @@ ESPGroup:AddToggle('DistanceESP', {
 	end
 })
 
-local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
+--[[local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
 
---[[ChecksGroup:AddToggle('FriendCheck', {
+ChecksGroup:AddToggle('FriendCheck', {
 	Text = 'Friend Check',
 	Default = getgenv().Psalms.FriendCheck,
 	Callback = function(Value)
