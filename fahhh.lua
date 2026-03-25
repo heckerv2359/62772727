@@ -680,14 +680,27 @@ function SigmaOhioPlayer()
 	local fovRadius = FOV43.Radius
 	local viewportSize = CC.ViewportSize
 
-	for i, v in pairs(game.Players:GetPlayers()) do
-		if v ~= player and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
-			if getgenv().Psalms.FriendCheck and player:IsFriendsWith(v) then continue end
-			if getgenv().Psalms.TeamCheck and v.Team and player.Team and v.Team == player.Team then continue end
-			local pos, onScreen = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+for _, v in pairs(game.Players:GetPlayers()) do
+		if v ~= player 
+			and v.Character 
+			and v.Character:FindFirstChild("Humanoid") 
+			and v.Character.Humanoid.Health > 0 
+			and v.Character:FindFirstChild("HumanoidRootPart") then
+			
+			if getgenv().Psalms.FriendCheck and player:IsFriendsWith(v.UserId) then 
+				continue 
+			end
+			
+			if getgenv().Psalms.TeamCheck and v.Team and player.Team and v.Team == player.Team then 
+				continue 
+			end
 
-			if onScreen and pos.X > 0 and pos.Y > 0 and pos.X < viewportSize.X and pos.Y < viewportSize.Y then
-				local magnitude = (Vector2.new(pos.X, pos.Y) - screenCenter).magnitude
+			local pos, onScreen = CC:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+			if onScreen and pos.X > 0 and pos.Y > 0 
+				and pos.X < viewportSize.X and pos.Y < viewportSize.Y then
+				
+				local magnitude = (Vector2.new(pos.X, pos.Y) - screenCenter).Magnitude
 				if magnitude < fovRadius and magnitude < shortestDistance then
 					closestPlayer = v
 					shortestDistance = magnitude
@@ -1239,9 +1252,10 @@ local function IsPlayerInFOV(player)
 		return false
 	end
 
-	if getgenv().Psalms.FriendCheck and LocalPlayer:IsFriendsWith(player) then
+	if getgenv().Psalms.FriendCheck and LocalPlayer:IsFriendsWith(player.UserId) then
 		return false
 	end
+	
 	if getgenv().Psalms.TeamCheck and player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
 		return false
 	end
@@ -1253,12 +1267,11 @@ local function IsPlayerInFOV(player)
 
 	if onScreen and distance <= FOV.Radius then
 		local ray = Ray.new(Camera.CFrame.Position, (characterRootPart.Position - Camera.CFrame.Position).unit * 500)
-		local part, position = workspace:FindPartOnRay(ray, LocalPlayer.Character)
+		local part, _ = workspace:FindPartOnRay(ray, LocalPlayer.Character)
 		return not part or part:IsDescendantOf(player.Character)
 	end
 	return false
 end
-
 
 RunService.RenderStepped:Connect(function()
 	FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
