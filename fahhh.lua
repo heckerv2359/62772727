@@ -1,3 +1,6 @@
+--[[xshitty free skids for ur ai coded gui]]
+
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/khenn791/script-khen/refs/heads/main/larplarpbypasser.txt"))()
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aa8283/i/refs/heads/main/Protected_2547730226887233.txt"))()
@@ -260,11 +263,9 @@ RightGroupBox:AddToggle('AutoPrediction', {
 })
 
 
-
--- Dropdown for Auto Prediction Mode
 RightGroupBox:AddDropdown('AutoPredMode', {
 	Values = { 'AdvanceCalculation', 'PingBased', 'Calculation', 'Blatant' },
-	Default = getgenv().Psalms.AutoPredMode == 'PingBased' and 2 or 1, -- Default to PingBased
+	Default = getgenv().Psalms.AutoPredMode == 'PingBased' and 2 or 1,
 	Text = 'Auto Prediction Mode',
 	Callback = function(Value)
 		getgenv().Psalms.AutoPredMode = Value
@@ -505,7 +506,7 @@ NotifyGroup:AddToggle('LockNotifications', {
 
 NotifyGroup:AddDropdown('NotificationNameType', {
     Values = { 'DisplayName', 'Username' },
-    Default = 1, -- 1 = DisplayName
+    Default = 1,
     Text = 'Show Name As',
     Callback = function(Value)
         getgenv().Psalms.NotificationNameType = Value
@@ -650,7 +651,7 @@ local function initializeToggleButton(screenGui)
 
 	button.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
-			-- Trigger the toggle function on each click
+			
 			Library:Toggle()
 
 			dragging = true
@@ -965,10 +966,8 @@ oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
         local targetPart = Plr.Character[partName]
         
         if k == "Target" then
-            return targetPart  -- Fake hit part
+            return targetPart
         end
-        
-        -- FULL PREDICTION MAGIC! 🎇
         local vel = targetPart.Velocity
         local hPred = getgenv().Psalms.SilentHorizontalPrediction
         local vPred = getgenv().Psalms.SilentVerticalPrediction   
@@ -1250,7 +1249,7 @@ local function checkTarget()
 
 								if not SigmaAir then
 									Shot2ing = false
-									targetSigmaPOBALLs = nil -- Reset the start time
+									targetSigmaPOBALLs = nil 
 									break
 								end
 							end
@@ -1281,19 +1280,19 @@ game:GetService("RunService").RenderStepped:Connect(function()
             local hum = char:FindFirstChildWhichIsA("Humanoid")
             if hum then
                 if hum.Health <= 0 or hum.Health < 6 then
-                    -- Target is dead / almost dead → unlock
+                    
                     enabled = false
                     Plr = nil
-                    destroyTracer()           -- if tracer is enabled
+                    destroyTracer()      
                 end
             else
-                -- No humanoid anymore
+                
                 enabled = false
                 Plr = nil
                 destroyTracer()
             end
         else
-            -- Character gone
+            
             enabled = false
             Plr = nil
             destroyTracer()
@@ -1440,17 +1439,17 @@ RunService.RenderStepped:Connect(function()
 
 				if onScreen then
 					
-					local headPos = head.Position + Vector3.new(0, 1, 0)   -- a bit above head
-					local feetPos = root.Position - Vector3.new(0, 3.5, 0) -- below feet
+					local headPos = head.Position + Vector3.new(0, 1, 0)
+					local feetPos = root.Position - Vector3.new(0, 3.5, 0)
 					
 					local top = Camera:WorldToViewportPoint(headPos)
 					local bottom = Camera:WorldToViewportPoint(feetPos)
 					
 					local boxHeight = math.abs(top.Y - bottom.Y)
-					local boxWidth = boxHeight * 0.55   -- slightly narrower looks cleaner
+					local boxWidth = boxHeight * 0.55
 					
 					local boxX = pos.X - boxWidth / 2
-					local boxY = math.min(top.Y, bottom.Y)  -- always start from the top point
+					local boxY = math.min(top.Y, bottom.Y)
 					
 					local boxPos = Vector2.new(boxX, boxY)
 
@@ -1535,7 +1534,7 @@ end
 local function IsInFOV(player)
     local char = player.Character
     if not char then return false end
-    local partName = getgenv().Psalms.SilentSelectedPart  -- Uses your Silent Target Part
+    local partName = getgenv().Psalms.SilentSelectedPart
     local part = char:FindFirstChild(partName)
     if part then
         return PositionTolerance(part.Position, getgenv().Psalms.TriggerFOVSize)
@@ -1601,7 +1600,7 @@ RunService.Heartbeat:Connect(TriggerBot)
 
 local aimTracer = Drawing.new("Line")
 aimTracer.Thickness = 2.5
-aimTracer.Color = Color3.fromRGB(0, 170, 255)   -- Light Blue
+aimTracer.Color = Color3.fromRGB(0, 170, 255)
 aimTracer.Transparency = 1
 aimTracer.Visible = false
 
