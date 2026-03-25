@@ -62,6 +62,8 @@ end
 local Tabs = {
 	Main = Window:AddTab('Main'),
 	Misc = Window:AddTab('Misc'),
+	Misc2 = Window:AddTab('Misc2'),
+	Settings = Window:AddTab("Settings")
 	Config = Window:AddTab('Config'),
 }
 
@@ -386,13 +388,15 @@ ESPGroup:AddToggle('DistanceESP', {
 
 local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
 
-ChecksGroup:AddToggle('FriendCheck', {
+--[[ChecksGroup:AddToggle('FriendCheck', {
 	Text = 'Friend Check',
 	Default = getgenv().Psalms.FriendCheck,
 	Callback = function(Value)
 		getgenv().Psalms.FriendCheck = Value
 	end
-})
+})]]
+
+
 
 ChecksGroup:AddToggle('TeamCheck', {
 	Text = 'Team Check',
