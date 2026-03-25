@@ -413,7 +413,7 @@ ChecksGroup:AddToggle('WallCheck', {
 })
 
 
-local TriggerGroup = Tabs.Misc:AddLeftGroupbox('Trigger Bot')
+local TriggerGroup = Tabs.Misc:AddRightGroupbox('Trigger Bot')
 
 TriggerGroup:AddToggle('TriggerEnabled', {
     Text = 'Enable Trigger Bot',
