@@ -103,6 +103,15 @@ getgenv().Psalms = {
 	SilentHorizontalPrediction = 0.1,
 	SilentVerticalPrediction = 0.1,
 	SilentSelectedPart = "HumanoidRootPart",
+	TriggerEnabled = false,
+	TriggerDelay = 0.2,
+	TriggerTapDelay = 0.01,
+	TriggerTolerance = 15,
+	TriggerDistance = 300,
+	TriggerFOVSize = 80,
+	TriggerFOVShow = false,
+	TriggerWallCheck = true,
+	TriggerKOCheck = true,
 }
 
 
@@ -392,6 +401,97 @@ ChecksGroup:AddToggle('TeamCheck', {
 		getgenv().Psalms.TeamCheck = Value
 	end
 })
+
+ChecksGroup:AddToggle('WallCheck', {
+	Text = 'Wall Check',
+	Default = getgenv().Psalms.TriggerWallCheck,
+	Callback = function(Value)
+		getgenv().Psalms.TriggerWallCheck = Value
+	end
+})
+
+
+local TriggerGroup = Tabs.Misc:AddLeftGroupbox('Trigger Bot')
+
+TriggerGroup:AddToggle('TriggerEnabled', {
+    Text = 'Enable Trigger Bot',
+    Default = getgenv().Psalms.TriggerEnabled,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerEnabled = Value
+    end
+})
+
+TriggerGroup:AddToggle('TriggerFOVShow', {
+    Text = 'Show FOV Circle',
+    Default = getgenv().Psalms.TriggerFOVShow,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerFOVShow = Value
+    end
+})
+
+TriggerGroup:AddToggle('TriggerKOCheck', {
+    Text = 'KO Check',
+    Default = getgenv().Psalms.TriggerKOCheck,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerKOCheck = Value
+    end
+})
+
+TriggerGroup:AddSlider('TriggerDelay', {
+    Text = 'Shoot Delay',
+    Default = getgenv().Psalms.TriggerDelay,
+    Min = 0,
+    Max = 1,
+    Rounding = 2,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerDelay = Value
+    end
+})
+
+TriggerGroup:AddSlider('TriggerTapDelay', {
+    Text = 'Tap Delay',
+    Default = getgenv().Psalms.TriggerTapDelay,
+    Min = 0,
+    Max = 0.1,
+    Rounding = 3,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerTapDelay = Value
+    end
+})
+
+TriggerGroup:AddSlider('TriggerTolerance', {
+    Text = 'Tolerance (how close to crosshair)',
+    Default = getgenv().Psalms.TriggerTolerance,
+    Min = 5,
+    Max = 50,
+    Rounding = 0,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerTolerance = Value
+    end
+})
+
+TriggerGroup:AddSlider('TriggerDistance', {
+    Text = 'Max Distance',
+    Default = getgenv().Psalms.TriggerDistance,
+    Min = 50,
+    Max = 500,
+    Rounding = 0,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerDistance = Value
+    end
+})
+
+TriggerGroup:AddSlider('TriggerFOVSize', {
+    Text = 'FOV Size',
+    Default = getgenv().Psalms.TriggerFOVSize,
+    Min = 10,
+    Max = 300,
+    Rounding = 0,
+    Callback = function(Value)
+        getgenv().Psalms.TriggerFOVSize = Value
+    end
+})
+
 
 SaveManager:SetLibrary(Library)
 ThemeManager:SetLibrary(Library)
@@ -1316,4 +1416,100 @@ Players.PlayerRemoving:Connect(function(player)
 		espCache[player] = nil
 	end
 end)
+
+
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local fovCircle = Drawing.new("Circle")
+fovCircle.Thickness = 1
+fovCircle.NumSides = 50
+fovCircle.Color = Color3.fromRGB(255, 0, 0)
+fovCircle.Transparency = 0.5
+fovCircle.Filled = false
+
+local function PositionTolerance(position, tolerance)
+    local screenPoint = Camera:WorldToViewportPoint(position)
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    return (Vector2.new(screenPoint.X, screenPoint.Y) - screenCenter).Magnitude <= tolerance
+end
+
+local function IsWithinDistance(player)
+    local char = player.Character
+    local root = char and char:FindFirstChild("HumanoidRootPart")
+    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not (root and myRoot) then return false end
+    return (root.Position - myRoot.Position).Magnitude <= getgenv().Psalms.TriggerDistance
+end
+
+local function IsInFOV(player)
+    local char = player.Character
+    if not char then return false end
+    local partName = getgenv().Psalms.SilentSelectedPart  -- Uses your Silent Target Part
+    local part = char:FindFirstChild(partName)
+    if part then
+        return PositionTolerance(part.Position, getgenv().Psalms.TriggerFOVSize)
+    end
+    return false
+end
+
+local function WallCheck(targetPart)
+    if not getgenv().Psalms.TriggerWallCheck then return true end
+    local origin = Camera.CFrame.Position
+    local direction = (targetPart.Position - origin)
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character or {}}
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    local result = workspace:Raycast(origin, direction, raycastParams)
+    return result == nil
+end
+
+local function KOCheck(player)
+    if not getgenv().Psalms.TriggerKOCheck then return true end
+    local be = player.Character and player.Character:FindFirstChild("BodyEffects")
+    local ko = be and be["K.O"] and be["K.O"].Value
+    local grabbed = player.Character and player.Character:FindFirstChild("GRABBING_CONSTRAINT")
+    return not (ko or grabbed)
+end
+
+local function TriggerBot()
+    if not getgenv().Psalms.TriggerEnabled then return end
+
+    local char = LocalPlayer.Character
+    if not char then return end
+    local tool = char:FindFirstChildOfClass("Tool")
+    if not tool then return end
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player == LocalPlayer then continue end
+        if not (IsInFOV(player) and IsWithinDistance(player)) then continue end
+
+        local tChar = player.Character
+        local root = tChar and tChar:FindFirstChild("HumanoidRootPart")
+        if not root then continue end
+
+        if not WallCheck(root) or not KOCheck(player) then continue end
+
+        if PositionTolerance(root.Position, getgenv().Psalms.TriggerTolerance) then
+            task.wait(getgenv().Psalms.TriggerDelay)
+            tool:Activate()
+            task.wait(getgenv().Psalms.TriggerTapDelay)
+        end
+    end
+end
+
+
+RunService.RenderStepped:Connect(function()
+    fovCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    fovCircle.Radius = getgenv().Psalms.TriggerFOVSize
+    fovCircle.Visible = getgenv().Psalms.TriggerFOVShow
+end)
+
+
+RunService.Heartbeat:Connect(TriggerBot)
+
+
 --------------------------
