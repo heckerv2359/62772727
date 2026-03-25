@@ -532,7 +532,7 @@ ClosestGroup:AddDropdown('ClosestPartMode', {
 })
 
 ClosestGroup:AddToggle('AimTracerEnabled', {
-    Text = 'Aim Tracer (shows where you aim)',
+    Text = 'Aim Tracer',
     Default = getgenv().Psalms.AimTracerEnabled,
     Callback = function(Value)
         getgenv().Psalms.AimTracerEnabled = Value
