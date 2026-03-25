@@ -63,7 +63,6 @@ local Tabs = {
 	Main = Window:AddTab('Main'),
 	Misc = Window:AddTab('Misc'),
 	Config = Window:AddTab('Config'),
-	ESP = Window:AddTab('ESP'),
 }
 
 
@@ -124,7 +123,7 @@ LeftGroupBox:AddToggle('Enabled', {
 })
 
 LeftGroupBox:AddToggle('AutoUnlock', {
-    Text = 'Auto Unlock (on death / low HP)',
+    Text = 'Auto Unlock',
     Default = getgenv().Psalms.AutoUnlock,
     Callback = function(Value)
         getgenv().Psalms.AutoUnlock = Value
@@ -333,32 +332,9 @@ RightGroupBox2:AddDropdown('SelectedMode', {
 	end
 })
 
+local ESPGroup = Tabs.Misc:AddLeftGroupbox('ESP Settings')
 
-local LeftGp = Tabs.Misc:AddLeftGroupbox('Cframe')
-
-getgenv().speedvalue = 0.9
-
-LeftGp:AddInput('Spe992ed', {
-	Default =  tostring(getgenv().speedvalue),
-	Numeric = true,
-	Text = 'Speed',
-	Callback = function(Value)
-		getgenv().speedvalue = tonumber(Value)
-	end
-})
-
-
-LeftGp:AddToggle('Cfra992me', {
-	Text = 'Cframe',
-	Default = false,
-	Callback = function(Value)
-		getgenv().cframespeedtoggle = Value
-	end
-})
-
-local ESPLeft = Tabs.ESP:AddLeftGroupbox('ESP Toggles')
-
-ESPLeft:AddToggle('BoxESP', {
+ESPGroup:AddToggle('BoxESP', {
 	Text = 'Box ESP',
 	Default = getgenv().Psalms.BoxESP,
 	Callback = function(Value)
@@ -366,7 +342,7 @@ ESPLeft:AddToggle('BoxESP', {
 	end
 })
 
-ESPLeft:AddToggle('NameESP', {
+ESPGroup:AddToggle('NameESP', {
 	Text = 'Name ESP',
 	Default = getgenv().Psalms.NameESP,
 	Callback = function(Value)
@@ -374,7 +350,7 @@ ESPLeft:AddToggle('NameESP', {
 	end
 })
 
-ESPLeft:AddToggle('HealthESP', {
+ESPGroup:AddToggle('HealthESP', {
 	Text = 'Health Bar ESP',
 	Default = getgenv().Psalms.HealthESP,
 	Callback = function(Value)
@@ -382,7 +358,7 @@ ESPLeft:AddToggle('HealthESP', {
 	end
 })
 
-ESPLeft:AddToggle('TracerESP', {
+ESPGroup:AddToggle('TracerESP', {
 	Text = 'Tracer ESP',
 	Default = getgenv().Psalms.TracerESP,
 	Callback = function(Value)
@@ -390,7 +366,7 @@ ESPLeft:AddToggle('TracerESP', {
 	end
 })
 
-ESPLeft:AddToggle('DistanceESP', {
+ESPGroup:AddToggle('DistanceESP', {
 	Text = 'Distance ESP (Under)',
 	Default = getgenv().Psalms.DistanceESP,
 	Callback = function(Value)
