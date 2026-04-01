@@ -1,30 +1,27 @@
-local Players = game:GetService("Players")
+-- made by dilih from https://discord.gg/rSJXqcWQ65
+-- open source so u can improve it
+
+
 local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
-local function disableDefaultInventory()
-	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
-	
-	local backpackGui = player:FindFirstChild("PlayerGui"):FindFirstChild("Backpack")
-	if backpackGui then
-		backpackGui.Enabled = false
-	end
+local function disableInventory()
+    StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 end
 
-disableDefaultInventory()
+disableInventory()
 
 player.CharacterAdded:Connect(function()
-	task.wait(0.5)
-	disableDefaultInventory()
+    task.wait(0.5)
+    disableInventory()
 end)
 
-player.PlayerGui.ChildAdded:Connect(function(child)
-	if child.Name == "Backpack" then
-		task.wait()
-		child.Enabled = false
-	end
-end)
+while true do
+    task.wait(0.8)
+    disableInventory()
+end
 
 local G2L = {};
 
