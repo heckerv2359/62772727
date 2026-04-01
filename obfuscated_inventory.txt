@@ -2,25 +2,72 @@
 -- open source so u can improve it
 
 
-local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
 
 local player = Players.LocalPlayer
 
-local function disableInventory()
-    StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+local function hasTool()
+	local backpack = player:FindFirstChildOfClass("Backpack")
+	if backpack then
+		for _, v in ipairs(backpack:GetChildren()) do
+			if v:IsA("Tool") then
+				return true
+			end
+		end
+	end
+
+	local character = player.Character
+	if character then
+		for _, v in ipairs(character:GetChildren()) do
+			if v:IsA("Tool") then
+				return true
+			end
+		end
+	end
+
+	return false
 end
 
-disableInventory()
+local function disableBackpack()
+	pcall(function()
+		StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+	end)
+end
 
-player.CharacterAdded:Connect(function()
-    task.wait(0.5)
-    disableInventory()
+task.spawn(function()
+	while true do
+		if hasTool() then
+			disableBackpack()
+		end
+		task.wait(0.1)
+	end
 end)
 
-while true do
-    task.wait(0.8)
-    disableInventory()
+player.CharacterAdded:Connect(function(character)
+	disableBackpack()
+
+	character.ChildAdded:Connect(function(child)
+		if child:IsA("Tool") then
+			disableBackpack()
+		end
+	end)
+end)
+
+local backpack = player:WaitForChild("Backpack")
+
+backpack.ChildAdded:Connect(function(child)
+	if child:IsA("Tool") then
+		disableBackpack()
+	end
+end)
+
+if player.Character then
+	player.Character.ChildAdded:Connect(function(child)
+		if child:IsA("Tool") then
+			disableBackpack()
+		end
+	end)
 end
 
 local G2L = {};
