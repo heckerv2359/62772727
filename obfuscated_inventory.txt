@@ -698,6 +698,8 @@ Closure = function()
     	object.CONNECTIONS.MouseLeave = frame.MouseLeave:Connect(function()
     		object:removeDescription()
     	end)
+
+    	
     	object.CONNECTIONS.GrabConn = frame.MouseButton1Down:Connect(function()
     		if self.slotsPositionLocked then return end
 
@@ -713,6 +715,18 @@ Closure = function()
     			mouseConn:Disconnect()
     			object.isGrabbed = false
 
+    			
+    			if not inventoryFrame.Visible then
+    				if newFrame then newFrame:Destroy() end
+    				frame.Parent = object:getParentInstance()
+    				
+    				if (frameStartPosition - Vector2.new(mouse.X, mouse.Y)).Magnitude <= SETTINGS.EQUIP_TOUCH_SENSITIVITY then
+    					manageTool()
+    				end
+    				return
+    			end
+
+    			
     			local droppedGuis = playerGui:GetGuiObjectsAtPosition(mouse.X, mouse.Y)
     			local wasSwapped = false
     			local dropTool = true
@@ -798,6 +812,7 @@ Closure = function()
     		end
     		mouseConn = mouse.Move:Connect(updateFramePos)
     	end)
+    	
 
     	tool:SetAttribute("toolAdded", true)
     	if parent == "HotBar" and position then
