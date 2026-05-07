@@ -6,19 +6,14 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/khenn791/script-khen/
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aa8283/i/refs/heads/main/Protected_2547730226887233.txt"))()
 
 
-local repo = "https://raw.githubusercontent.com/khen791/library/main/"
-
-local Library = loadstring(game:HttpGet(repo .. "Library.lua..txt"))()
-
-local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerv2359/62772727/refs/heads/main/theme.lua"))()
-
-local SaveManager = loadstring(game:HttpGet(repo .. "nini/SaveManager.lua"))()
-
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/mstudio45/LinoriaLib/main/Library.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/mstudio45/LinoriaLib/main/addons/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/mstudio45/LinoriaLib/main/addons/SaveManager.lua"))()
 
 local Window = Library:CreateWindow({
 	Title = 'SIDED HUMANS',
 	Center = true,
-	AutoShow = false,
+	AutoShow = true,
 })
 
 
