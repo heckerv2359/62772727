@@ -82,7 +82,7 @@ local LeftGroupBox = Tabs.Main:AddLeftGroupbox('General Settings')
 
 
 
-getgenv().Psalms = {
+getgenv().Ponchay = {
 	Enabled = true,
 	HorizontalPrediction = 0.1,
 	VerticalPrediction = 0.1,
@@ -128,41 +128,41 @@ getgenv().Psalms = {
 
 LeftGroupBox:AddToggle('Enabled', {
 	Text = 'Target Lock',
-	Default = getgenv().Psalms.Enabled,
+	Default = getgenv().Ponchay.Enabled,
 	Callback = function(Value)
-		getgenv().Psalms.Enabled = Value
+		getgenv().Ponchay.Enabled = Value
 	end
 })
 
 LeftGroupBox:AddToggle('Enabled', {
 	Text = 'Tracer',
-	Default = getgenv().Psalms.TracerEnabled,
+	Default = getgenv().Ponchay.TracerEnabled,
 	Callback = function(Value)
-		getgenv().Psalms.TracerEnabled = Value
+		getgenv().Ponchay.TracerEnabled = Value
 	end
 })
 
 LeftGroupBox:AddToggle('AutoUnlock', {
     Text = 'Auto Unlock',
-    Default = getgenv().Psalms.AutoUnlock,
+    Default = getgenv().Ponchay.AutoUnlock,
     Callback = function(Value)
-        getgenv().Psalms.AutoUnlock = Value
+        getgenv().Ponchay.AutoUnlock = Value
     end
 })
 
 LeftGroupBox:AddToggle('NoGroundShot', {
 	Text = 'No Ground Shot',
-	Default = getgenv().Psalms.NoGroundShot,
+	Default = getgenv().Ponchay.NoGroundShot,
 	Callback = function(Value)
-		getgenv().Psalms.NoGroundShot = Value
+		getgenv().Ponchay.NoGroundShot = Value
 	end
 })
 
 LeftGroupBox:AddToggle('LookAt', {
 	Text = 'Look At',
-	Default = getgenv().Psalms.LookAt,
+	Default = getgenv().Ponchay.LookAt,
 	Callback = function(Value)
-		getgenv().Psalms.LookAt = Value
+		getgenv().Ponchay.LookAt = Value
 	end
 })
 
@@ -172,20 +172,20 @@ local DickHead = Tabs.Main:AddLeftGroupbox('Camera')
 
 DickHead:AddToggle('CamLock', {
 	Text = 'Enable CamLock',
-	Default = getgenv().Psalms.Camera,
+	Default = getgenv().Ponchay.Camera,
 	Callback = function(Value)
-		getgenv().Psalms.Camera = Value
+		getgenv().Ponchay.Camera = Value
 	end
 })
 
 
 
 DickHead:AddInput('Smoothness', {
-	Default = tostring(getgenv().Psalms.smoothness),
+	Default = tostring(getgenv().Ponchay.smoothness),
 	Numeric = true,
 	Text = 'Camera Smoothness',
 	Callback = function(Value)
-		getgenv().Psalms.smoothness = tonumber(Value)
+		getgenv().Ponchay.smoothness = tonumber(Value)
 	end
 })
 
@@ -196,26 +196,26 @@ local sigmaox = Tabs.Main:AddLeftGroupbox('Auto Air')
 
 sigmaox:AddToggle('Flicker', {
 	Text = 'Flick',
-	Default = getgenv().Psalms.Flick,
+	Default = getgenv().Ponchay.Flick,
 	Callback = function(Value)
-		getgenv().Psalms.Flick = Value
+		getgenv().Ponchay.Flick = Value
 	end
 })
 
 sigmaox:AddToggle('Auto Air', {
 	Text = 'Enable Auto Air',
-	Default = getgenv().Psalms.AutoAir,
+	Default = getgenv().Ponchay.AutoAir,
 	Callback = function(Value)
-		getgenv().Psalms.AutoAir = Value
+		getgenv().Ponchay.AutoAir = Value
 	end
 })
 
 sigmaox:AddInput('ShootDelay', {
-	Default = tostring(getgenv().Psalms.ShootDelay),
+	Default = tostring(getgenv().Ponchay.ShootDelay),
 	Numeric = true,
 	Text = 'Shoot Delay',
 	Callback = function(Value)
-		getgenv().Psalms.ShootDelay = tonumber(Value)
+		getgenv().Ponchay.ShootDelay = tonumber(Value)
 	end
 })
 
@@ -225,61 +225,61 @@ sigmaox:AddInput('ShootDelay', {
 local RightGroupBox = Tabs.Main:AddRightGroupbox('Prediction Settings')
 
 RightGroupBox:AddInput('HorizontalPrediction', {
-	Default = tostring(getgenv().Psalms.HorizontalPrediction),
+	Default = tostring(getgenv().Ponchay.HorizontalPrediction),
 	Numeric = true,
 	Text = 'Horizontal Prediction',
 	Callback = function(Value)
-		if not getgenv().Psalms.AutoPrediction then
-			getgenv().Psalms.HorizontalPrediction = tonumber(Value)
+		if not getgenv().Ponchay.AutoPrediction then
+			getgenv().Ponchay.HorizontalPrediction = tonumber(Value)
 		end
 	end
 })
 
 RightGroupBox:AddInput('VerticalPrediction', {
-	Default = tostring(getgenv().Psalms.VerticalPrediction),
+	Default = tostring(getgenv().Ponchay.VerticalPrediction),
 	Numeric = true,
 	Text = 'Vertical Prediction',
 	Callback = function(Value)
-		if not getgenv().Psalms.AutoPrediction then
-			getgenv().Psalms.VerticalPrediction = tonumber(Value)
+		if not getgenv().Ponchay.AutoPrediction then
+			getgenv().Ponchay.VerticalPrediction = tonumber(Value)
 		end
 	end
 })
 
 RightGroupBox:AddInput('Jump Offset', {
-	Default = tostring(getgenv().Psalms.jumpoffset),
+	Default = tostring(getgenv().Ponchay.jumpoffset),
 	Text = 'Jump Offset',
 	Callback = function(Value)
-		getgenv().Psalms.jumpoffset = Value
+		getgenv().Ponchay.jumpoffset = Value
 	end
 })
 
 RightGroupBox:AddToggle('AutoPrediction', {
 	Text = 'Auto Prediction',
-	Default = getgenv().Psalms.AutoPrediction,
+	Default = getgenv().Ponchay.AutoPrediction,
 	Callback = function(Value)
-		getgenv().Psalms.AutoPrediction = Value
+		getgenv().Ponchay.AutoPrediction = Value
 	end
 })
 
 
 RightGroupBox:AddDropdown('AutoPredMode', {
 	Values = { 'AdvanceCalculation', 'PingBased', 'Calculation', 'Blatant' },
-	Default = getgenv().Psalms.AutoPredMode == 'PingBased' and 2 or 1,
+	Default = getgenv().Ponchay.AutoPredMode == 'PingBased' and 2 or 1,
 	Text = 'Auto Prediction Mode',
 	Callback = function(Value)
-		getgenv().Psalms.AutoPredMode = Value
+		getgenv().Ponchay.AutoPredMode = Value
 	end
 })
 
 RightGroupBox:AddDropdown('SelectedPart', {
 	Values = { 'Head', 'LowerTorso', 'UpperTorso', 'HumanoidRootPart' },
-	Default = getgenv().Psalms.SelectedPart == 'Head' and 1 or
-		getgenv().Psalms.SelectedPart == 'LowerTorso' and 2 or
-		getgenv().Psalms.SelectedPart == 'UpperTorso' and 3 or 4,
+	Default = getgenv().Ponchay.SelectedPart == 'Head' and 1 or
+		getgenv().Ponchay.SelectedPart == 'LowerTorso' and 2 or
+		getgenv().Ponchay.SelectedPart == 'UpperTorso' and 3 or 4,
 	Text = 'Target Part',
 	Callback = function(Value)
-		getgenv().Psalms.SelectedPart = Value
+		getgenv().Ponchay.SelectedPart = Value
 	end
 })
 
@@ -289,7 +289,7 @@ RightGroupBox99:AddToggle('SilentAimNew', {
     Text = 'Silent Aim',
     Default = false,
     Callback = function(Value)
-        getgenv().Psalms.UseMouseHitSilent = Value
+        getgenv().Ponchay.UseMouseHitSilent = Value
     end
 })
 
@@ -297,48 +297,48 @@ local AntiLockGroup = Tabs.Misc:AddLeftGroupbox('Anti Lock')
 
 AntiLockGroup:AddToggle('AntiEnabled', {
 	Text = 'Enable Anti Lock',
-	Default = getgenv().Psalms.AntiEnabled or false,
+	Default = getgenv().Ponchay.AntiEnabled or false,
 	Callback = function(Value)
-		getgenv().Psalms.AntiEnabled = Value
+		getgenv().Ponchay.AntiEnabled = Value
 	end
 })
 
 AntiLockGroup:AddDropdown('SelectedMode', {
 	Values = { 'Predbreaker', 'Sky', 'Ground' },
-	Default = getgenv().Psalms.AntiLock == 'Predbreaker' and 1 or
-	          getgenv().Psalms.AntiLock == 'Sky' and 2 or 3,
+	Default = getgenv().Ponchay.AntiLock == 'Predbreaker' and 1 or
+	          getgenv().Ponchay.AntiLock == 'Sky' and 2 or 3,
 	Text = 'Anti Lock Mode',
 	Callback = function(Value)
-		getgenv().Psalms.AntiLock = Value
+		getgenv().Ponchay.AntiLock = Value
 	end
 })
 
 RightGroupBox99:AddInput('SilentHorizontalPrediction', {
-	Default = tostring(getgenv().Psalms.SilentHorizontalPrediction),
+	Default = tostring(getgenv().Ponchay.SilentHorizontalPrediction),
 	Numeric = true,
 	Text = 'Silent Horizontal Prediction',
 	Callback = function(Value)
-		getgenv().Psalms.SilentHorizontalPrediction = tonumber(Value)
+		getgenv().Ponchay.SilentHorizontalPrediction = tonumber(Value)
 	end
 })
 
 RightGroupBox99:AddInput('SilentVerticalPrediction', {
-	Default = tostring(getgenv().Psalms.SilentVerticalPrediction),
+	Default = tostring(getgenv().Ponchay.SilentVerticalPrediction),
 	Numeric = true,
 	Text = 'Silent Vertical Prediction',
 	Callback = function(Value)
-		getgenv().Psalms.SilentVerticalPrediction = tonumber(Value)
+		getgenv().Ponchay.SilentVerticalPrediction = tonumber(Value)
 	end
 })
 
 RightGroupBox99:AddDropdown('SilentSelectedPart', {
 	Values = { 'Head', 'LowerTorso', 'UpperTorso', 'HumanoidRootPart' },
-	Default = getgenv().Psalms.SilentSelectedPart == 'Head' and 1 or
-		getgenv().Psalms.SilentSelectedPart == 'LowerTorso' and 2 or
-		getgenv().Psalms.SilentSelectedPart == 'UpperTorso' and 3 or 4,
+	Default = getgenv().Ponchay.SilentSelectedPart == 'Head' and 1 or
+		getgenv().Ponchay.SilentSelectedPart == 'LowerTorso' and 2 or
+		getgenv().Ponchay.SilentSelectedPart == 'UpperTorso' and 3 or 4,
 	Text = 'Silent Target Part',
 	Callback = function(Value)
-		getgenv().Psalms.SilentSelectedPart = Value
+		getgenv().Ponchay.SilentSelectedPart = Value
 	end
 })
 
@@ -347,41 +347,41 @@ local ESPGroup = Tabs.Misc:AddLeftGroupbox('ESP Settings')
 
 ESPGroup:AddToggle('BoxESP', {
 	Text = 'Box ESP',
-	Default = getgenv().Psalms.BoxESP,
+	Default = getgenv().Ponchay.BoxESP,
 	Callback = function(Value)
-		getgenv().Psalms.BoxESP = Value
+		getgenv().Ponchay.BoxESP = Value
 	end
 })
 
 ESPGroup:AddToggle('NameESP', {
 	Text = 'Name ESP',
-	Default = getgenv().Psalms.NameESP,
+	Default = getgenv().Ponchay.NameESP,
 	Callback = function(Value)
-		getgenv().Psalms.NameESP = Value
+		getgenv().Ponchay.NameESP = Value
 	end
 })
 
 ESPGroup:AddToggle('HealthESP', {
 	Text = 'Health Bar ESP',
-	Default = getgenv().Psalms.HealthESP,
+	Default = getgenv().Ponchay.HealthESP,
 	Callback = function(Value)
-		getgenv().Psalms.HealthESP = Value
+		getgenv().Ponchay.HealthESP = Value
 	end
 })
 
 ESPGroup:AddToggle('TracerESP', {
 	Text = 'Tracer ESP',
-	Default = getgenv().Psalms.TracerESP,
+	Default = getgenv().Ponchay.TracerESP,
 	Callback = function(Value)
-		getgenv().Psalms.TracerESP = Value
+		getgenv().Ponchay.TracerESP = Value
 	end
 })
 
 ESPGroup:AddToggle('DistanceESP', {
 	Text = 'Distance ESP (Under)',
-	Default = getgenv().Psalms.DistanceESP,
+	Default = getgenv().Ponchay.DistanceESP,
 	Callback = function(Value)
-		getgenv().Psalms.DistanceESP = Value
+		getgenv().Ponchay.DistanceESP = Value
 	end
 })
 
@@ -389,25 +389,25 @@ local ChecksGroup = Tabs.Misc:AddLeftGroupbox('Target Checks')
 
 ChecksGroup:AddToggle('FriendCheck', {
 	Text = 'Friend Check',
-	Default = getgenv().Psalms.FriendCheck,
+	Default = getgenv().Ponchay.FriendCheck,
 	Callback = function(Value)
-		getgenv().Psalms.FriendCheck = Value
+		getgenv().Ponchay.FriendCheck = Value
 	end
 })
 
 ChecksGroup:AddToggle('TeamCheck', {
 	Text = 'Team Check',
-	Default = getgenv().Psalms.TeamCheck,
+	Default = getgenv().Ponchay.TeamCheck,
 	Callback = function(Value)
-		getgenv().Psalms.TeamCheck = Value
+		getgenv().Ponchay.TeamCheck = Value
 	end
 })
 
 ChecksGroup:AddToggle('WallCheck', {
 	Text = 'Wall Check',
-	Default = getgenv().Psalms.TriggerWallCheck,
+	Default = getgenv().Ponchay.TriggerWallCheck,
 	Callback = function(Value)
-		getgenv().Psalms.TriggerWallCheck = Value
+		getgenv().Ponchay.TriggerWallCheck = Value
 	end
 })
 
@@ -416,70 +416,70 @@ local TriggerGroup = Tabs.Misc:AddRightGroupbox('Trigger Bot')
 
 TriggerGroup:AddToggle('TriggerEnabled', {
     Text = 'Enable Trigger Bot',
-    Default = getgenv().Psalms.TriggerEnabled,
+    Default = getgenv().Ponchay.TriggerEnabled,
     Callback = function(Value)
-        getgenv().Psalms.TriggerEnabled = Value
+        getgenv().Ponchay.TriggerEnabled = Value
     end
 })
 
 TriggerGroup:AddToggle('TriggerFOVShow', {
     Text = 'Show FOV Circle',
-    Default = getgenv().Psalms.TriggerFOVShow,
+    Default = getgenv().Ponchay.TriggerFOVShow,
     Callback = function(Value)
-        getgenv().Psalms.TriggerFOVShow = Value
+        getgenv().Ponchay.TriggerFOVShow = Value
     end
 })
 
 TriggerGroup:AddToggle('TriggerKOCheck', {
     Text = 'KO Check (don\'t shoot downed players)',
-    Default = getgenv().Psalms.TriggerKOCheck,
+    Default = getgenv().Ponchay.TriggerKOCheck,
     Callback = function(Value)
-        getgenv().Psalms.TriggerKOCheck = Value
+        getgenv().Ponchay.TriggerKOCheck = Value
     end
 })
 
 TriggerGroup:AddInput('TriggerDelay', {
     Text = 'Shoot Delay',
-    Default = tostring(getgenv().Psalms.TriggerDelay),
+    Default = tostring(getgenv().Ponchay.TriggerDelay),
     Numeric = true,
     Callback = function(Value)
-        getgenv().Psalms.TriggerDelay = tonumber(Value) or 0.2
+        getgenv().Ponchay.TriggerDelay = tonumber(Value) or 0.2
     end
 })
 
 TriggerGroup:AddInput('TriggerTapDelay', {
     Text = 'Tap Delay',
-    Default = tostring(getgenv().Psalms.TriggerTapDelay),
+    Default = tostring(getgenv().Ponchay.TriggerTapDelay),
     Numeric = true,
     Callback = function(Value)
-        getgenv().Psalms.TriggerTapDelay = tonumber(Value) or 0.01
+        getgenv().Ponchay.TriggerTapDelay = tonumber(Value) or 0.01
     end
 })
 
 TriggerGroup:AddInput('TriggerTolerance', {
     Text = 'Tolerance (how close to crosshair)',
-    Default = tostring(getgenv().Psalms.TriggerTolerance),
+    Default = tostring(getgenv().Ponchay.TriggerTolerance),
     Numeric = true,
     Callback = function(Value)
-        getgenv().Psalms.TriggerTolerance = tonumber(Value) or 15
+        getgenv().Ponchay.TriggerTolerance = tonumber(Value) or 15
     end
 })
 
 TriggerGroup:AddInput('TriggerDistance', {
     Text = 'Max Distance',
-    Default = tostring(getgenv().Psalms.TriggerDistance),
+    Default = tostring(getgenv().Ponchay.TriggerDistance),
     Numeric = true,
     Callback = function(Value)
-        getgenv().Psalms.TriggerDistance = tonumber(Value) or 300
+        getgenv().Ponchay.TriggerDistance = tonumber(Value) or 300
     end
 })
 
 TriggerGroup:AddInput('TriggerFOVSize', {
     Text = 'FOV Size',
-    Default = tostring(getgenv().Psalms.TriggerFOVSize),
+    Default = tostring(getgenv().Ponchay.TriggerFOVSize),
     Numeric = true,
     Callback = function(Value)
-        getgenv().Psalms.TriggerFOVSize = tonumber(Value) or 80
+        getgenv().Ponchay.TriggerFOVSize = tonumber(Value) or 80
     end
 })
 
@@ -487,9 +487,9 @@ local NotifyGroup = Tabs.Misc2:AddLeftGroupbox('Notifications')
 
 NotifyGroup:AddToggle('LockNotifications', {
     Text = 'Enable Lock Notifications',
-    Default = getgenv().Psalms.LockNotifications,
+    Default = getgenv().Ponchay.LockNotifications,
     Callback = function(Value)
-        getgenv().Psalms.LockNotifications = Value
+        getgenv().Ponchay.LockNotifications = Value
     end
 })
 
@@ -498,7 +498,7 @@ NotifyGroup:AddDropdown('NotificationNameType', {
     Default = 1,
     Text = 'Show Name As',
     Callback = function(Value)
-        getgenv().Psalms.NotificationNameType = Value
+        getgenv().Ponchay.NotificationNameType = Value
     end
 })
 
@@ -506,26 +506,26 @@ local ClosestGroup = Tabs.Misc2:AddLeftGroupbox('Closest Part')
 
 ClosestGroup:AddToggle('ClosestPartEnabled', {
     Text = 'Enable Closest Part',
-    Default = getgenv().Psalms.ClosestPartEnabled,
+    Default = getgenv().Ponchay.ClosestPartEnabled,
     Callback = function(Value)
-        getgenv().Psalms.ClosestPartEnabled = Value
+        getgenv().Ponchay.ClosestPartEnabled = Value
     end
 })
 
 ClosestGroup:AddDropdown('ClosestPartMode', {
     Values = { 'Camera', 'Silent' },
-    Default = getgenv().Psalms.ClosestPartMode == 'Camera' and 1 or 2,
+    Default = getgenv().Ponchay.ClosestPartMode == 'Camera' and 1 or 2,
     Text = 'Closest Part Mode',
     Callback = function(Value)
-        getgenv().Psalms.ClosestPartMode = Value
+        getgenv().Ponchay.ClosestPartMode = Value
     end
 })
 
 ClosestGroup:AddToggle('AimTracerEnabled', {
     Text = 'Aim Tracer',
-    Default = getgenv().Psalms.AimTracerEnabled,
+    Default = getgenv().Ponchay.AimTracerEnabled,
     Callback = function(Value)
-        getgenv().Psalms.AimTracerEnabled = Value
+        getgenv().Ponchay.AimTracerEnabled = Value
     end
 })
 
@@ -534,20 +534,20 @@ local ResolverGroup = Tabs.Misc2:AddRightGroupbox('Resolver')
 
 ResolverGroup:AddToggle('ResolverEnabled', {
     Text = 'Enable Resolver',
-    Default = getgenv().Psalms.ResolverEnabled,
+    Default = getgenv().Ponchay.ResolverEnabled,
     Callback = function(Value)
-        getgenv().Psalms.ResolverEnabled = Value
+        getgenv().Ponchay.ResolverEnabled = Value
     end
 })
 
 ResolverGroup:AddDropdown('ResolverType', {
     Values = { 'Recalculate', 'LookVector', 'MoveDirection', 'ZeroPrediction' },
-    Default = getgenv().Psalms.ResolverType == 'Recalculate' and 1 or
-              getgenv().Psalms.ResolverType == 'LookVector' and 2 or
-              getgenv().Psalms.ResolverType == 'MoveDirection' and 3 or 4,
+    Default = getgenv().Ponchay.ResolverType == 'Recalculate' and 1 or
+              getgenv().Ponchay.ResolverType == 'LookVector' and 2 or
+              getgenv().Ponchay.ResolverType == 'MoveDirection' and 3 or 4,
     Text = 'Resolver Type',
     Callback = function(Value)
-        getgenv().Psalms.ResolverType = Value
+        getgenv().Ponchay.ResolverType = Value
     end
 })
 
@@ -581,12 +581,12 @@ game:GetService("RunService").Heartbeat:Connect(function()
 				character.Humanoid.MoveDirection * getgenv().speedvalue / 0.5
 		end
 
-		if getgenv().Psalms.AntiEnabled then
-			if getgenv().Psalms.AntiLock == "Predbreaker" then
+		if getgenv().Ponchay.AntiEnabled then
+			if getgenv().Ponchay.AntiLock == "Predbreaker" then
 				humanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-			elseif getgenv().Psalms.AntiLock == "Sky" then
+			elseif getgenv().Ponchay.AntiLock == "Sky" then
 				humanoidRootPart.Velocity = Vector3.new(0, 100, 0)
-			elseif getgenv().Psalms.AntiLock == "Ground" then
+			elseif getgenv().Ponchay.AntiLock == "Ground" then
 				humanoidRootPart.Velocity = Vector3.new(0, -400, 0)
 			end
 		end
@@ -668,8 +668,8 @@ local screenGui = createScreenGui()
 initializeToggleButton(screenGui)
 
 
-getgenv().Psalms.LockType = "Namecall"
-getgenv().Psalms.RESOLVER = "MoveDirection"
+getgenv().Ponchay.LockType = "Namecall"
+getgenv().Ponchay.RESOLVER = "MoveDirection"
 
 
 
@@ -747,8 +747,8 @@ function SigmaOhioPlayer()
 
 	for i, v in pairs(game.Players:GetPlayers()) do
 		if v ~= player and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
-			if getgenv().Psalms.FriendCheck and player:IsFriendsWith(v) then continue end
-			if getgenv().Psalms.TeamCheck and v.Team and player.Team and v.Team == player.Team then continue end
+			if getgenv().Ponchay.FriendCheck and player:IsFriendsWith(v) then continue end
+			if getgenv().Ponchay.TeamCheck and v.Team and player.Team and v.Team == player.Team then continue end
 			local pos, onScreen = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
 
 			if onScreen and pos.X > 0 and pos.Y > 0 and pos.X < viewportSize.X and pos.Y < viewportSize.Y then
@@ -808,7 +808,7 @@ function LookAtPlayer(Target)
 	local localHumanoidRootPart = localChar:FindFirstChild("HumanoidRootPart")
 
 	if localHumanoidRootPart then
-		if getgenv().Psalms and getgenv().Psalms.LookAt then
+		if getgenv().Ponchay and getgenv().Ponchay.LookAt then
 			if Target and Target.Character and Target.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHumanoidRootPart = Target.Character.HumanoidRootPart
 
@@ -837,8 +837,8 @@ local function toggleLock()
 		Plr = nil
 		destroyTracer()
 
-		if getgenv().Psalms.LockNotifications then
-			local name = oldTarget and (getgenv().Psalms.NotificationNameType == "DisplayName" 
+		if getgenv().Ponchay.LockNotifications then
+			local name = oldTarget and (getgenv().Ponchay.NotificationNameType == "DisplayName" 
 				and (oldTarget.DisplayName or oldTarget.Name) 
 				or oldTarget.Name) or "Unknown"
 
@@ -850,12 +850,12 @@ local function toggleLock()
 		Plr = SigmaOhioPlayer()
 		if Plr then
 			enabled = true
-			if getgenv().Psalms.TracerEnabled then
+			if getgenv().Ponchay.TracerEnabled then
 				createTracer(game.Players.LocalPlayer, Plr)  
 			end
 
-			if getgenv().Psalms.LockNotifications then
-				local name = (getgenv().Psalms.NotificationNameType == "DisplayName" 
+			if getgenv().Ponchay.LockNotifications then
+				local name = (getgenv().Ponchay.NotificationNameType == "DisplayName" 
 					and (Plr.DisplayName or Plr.Name) 
 					or Plr.Name)
 
@@ -894,19 +894,19 @@ mt.__namecall = newcclosure(function(...)
 	local args = {...}
 	local method = getnamecallmethod()
 
-	if getgenv().Psalms.Enabled and getgenv().Psalms.LockType == "Namecall" then
+	if getgenv().Ponchay.Enabled and getgenv().Ponchay.LockType == "Namecall" then
 		if Plr and Plr.Character and method == "FireServer" and (args[2] == remoteInfo.Argument) then
-			local selectedPart = getgenv().Psalms.SelectedPart
+			local selectedPart = getgenv().Ponchay.SelectedPart
 			local targetPart = Plr.Character[selectedPart]
 
 			if targetPart then
 				local velocity = targetPart.Velocity
-				if getgenv().Psalms.ResolverEnabled then
-					local resolverType = getgenv().Psalms.ResolverType
+				if getgenv().Ponchay.ResolverEnabled then
+					local resolverType = getgenv().Ponchay.ResolverType
 						if resolverType == "Recalculate" then
 							velocity = targetPart.Velocity
 					elseif resolverType == "LookVector" then
-						velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction
+						velocity = targetPart.CFrame.LookVector * getgenv().Ponchay.HorizontalPrediction
 					elseif resolverType == "MoveDirection" then
 							velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
 					elseif resolverType == "ZeroPrediction" then
@@ -916,11 +916,11 @@ mt.__namecall = newcclosure(function(...)
 					velocity = targetPart.Velocity
 				end
 
-				local horizontalPrediction = getgenv().Psalms.HorizontalPrediction
-				local verticalPrediction = getgenv().Psalms.VerticalPrediction
-				local jumpOffset = getgenv().Psalms.jumpoffset or 0
+				local horizontalPrediction = getgenv().Ponchay.HorizontalPrediction
+				local verticalPrediction = getgenv().Ponchay.VerticalPrediction
+				local jumpOffset = getgenv().Ponchay.jumpoffset or 0
 
-				if not getgenv().Psalms.ResolverEnabled then
+				if not getgenv().Ponchay.ResolverEnabled then
 					args[3] = Vector3.new(
 						targetPart.Position.X + (velocity.X * horizontalPrediction),
 						targetPart.Position.Y + (velocity.Y * verticalPrediction) + jumpOffset,
@@ -946,21 +946,21 @@ oldIndex = hookmetamethod(game, "__index", newcclosure(function(t, k)
     if not checkcaller() 
         and t == mouse 
         and (k == "Hit" or k == "Target") 
-        and getgenv().Psalms.UseMouseHitSilent
+        and getgenv().Ponchay.UseMouseHitSilent
         and Plr 
         and Plr.Character 
-        and Plr.Character:FindFirstChild(getgenv().Psalms.SelectedPart)
+        and Plr.Character:FindFirstChild(getgenv().Ponchay.SelectedPart)
     then
-        local partName = getgenv().Psalms.SilentSelectedPart
+        local partName = getgenv().Ponchay.SilentSelectedPart
         local targetPart = Plr.Character[partName]
         
         if k == "Target" then
             return targetPart
         end
         local vel = targetPart.Velocity
-        local hPred = getgenv().Psalms.SilentHorizontalPrediction
-        local vPred = getgenv().Psalms.SilentVerticalPrediction   
-        local jumpOff = getgenv().Psalms.jumpoffset or 0     
+        local hPred = getgenv().Ponchay.SilentHorizontalPrediction
+        local vPred = getgenv().Ponchay.SilentVerticalPrediction   
+        local jumpOff = getgenv().Ponchay.jumpoffset or 0     
         local predX = targetPart.Position.X + (vel.X * hPred)
         local predY = targetPart.Position.Y + (vel.Y * vPred) + jumpOff
         local predZ = targetPart.Position.Z + (vel.Z * hPred)
@@ -1055,41 +1055,41 @@ local function calculateAdvancePrediction(target, cameraPosition, pingBase)
 end
 
 local function updatePredictionValue()
-	if getgenv().Psalms.AutoPrediction then
+	if getgenv().Ponchay.AutoPrediction then
 		local pingValue = Stas.Network.ServerStatsItem["Data Ping"]:GetValueString()
 		local split = string.split(pingValue, '(')
 		local ping = tonumber(split[1])
 
 		if ping then
-			if getgenv().Psalms.AutoPredMode == "PingBased" then
+			if getgenv().Ponchay.AutoPredMode == "PingBased" then
 				for i = 1, #predictionTable do
 					if ping < predictionTable[i][1] then
 						local value = predictionTable[i][2]
-						getgenv().Psalms.HorizontalPrediction = value
-						getgenv().Psalms.VerticalPrediction = value
+						getgenv().Ponchay.HorizontalPrediction = value
+						getgenv().Ponchay.VerticalPrediction = value
 						break
 					end
 				end
-			elseif getgenv().Psalms.AutoPredMode == "Calculation" then
+			elseif getgenv().Ponchay.AutoPredMode == "Calculation" then
 				local calculatedValue = 0.1 + (ping / 1000) * 0.32
-				getgenv().Psalms.HorizontalPrediction = calculatedValue
-				getgenv().Psalms.VerticalPrediction = calculatedValue
-			elseif getgenv().Psalms.AutoPredMode == "AdvanceCalculation" then
+				getgenv().Ponchay.HorizontalPrediction = calculatedValue
+				getgenv().Ponchay.VerticalPrediction = calculatedValue
+			elseif getgenv().Ponchay.AutoPredMode == "AdvanceCalculation" then
 				for i = 1, #predictionTable do
 					if ping < predictionTable[i][1] then
 						local pingBase = predictionTable[i][2]
 						local advancePredictionValue = calculateAdvancePrediction(Plr, workspace.CurrentCamera.CFrame.Position, pingBase)
-						getgenv().Psalms.HorizontalPrediction = advancePredictionValue
-						getgenv().Psalms.VerticalPrediction = advancePredictionValue
+						getgenv().Ponchay.HorizontalPrediction = advancePredictionValue
+						getgenv().Ponchay.VerticalPrediction = advancePredictionValue
 						break
 					end
 				end
-			elseif getgenv().Psalms.AutoPredMode == "Blatant" then
+			elseif getgenv().Ponchay.AutoPredMode == "Blatant" then
 				for i = 1, #Blatant do
 					if ping < Blatant[i][1] then
 						local value = Blatant[i][2]
-						getgenv().Psalms.HorizontalPrediction = value
-						getgenv().Psalms.VerticalPrediction = value
+						getgenv().Ponchay.HorizontalPrediction = value
+						getgenv().Ponchay.VerticalPrediction = value
 						break
 					end
 				end
@@ -1100,14 +1100,14 @@ end
 
 
 RunService.Heartbeat:Connect(function()
-	if getgenv().Psalms.Flick and Plr and Plr.Character then
+	if getgenv().Ponchay.Flick and Plr and Plr.Character then
 		local playerHumanoid = Plr.Character:FindFirstChild("Humanoid")
 		if playerHumanoid and playerHumanoid.Health > 0 then
 
 			local targetPart = Plr.Character:FindFirstChild("UpperTorso") or Plr.Character:FindFirstChild("Head")
 			if targetPart and playerHumanoid.FloorMaterial == Enum.Material.Air then
 				local camera = workspace.CurrentCamera
-				local targetPosition = targetPart.Position + targetPart.Velocity * getgenv().Psalms.VerticalPrediction
+				local targetPosition = targetPart.Position + targetPart.Velocity * getgenv().Ponchay.VerticalPrediction
 				camera.CFrame = CFrame.new(camera.CFrame.Position, targetPosition)
 			end
 		end
@@ -1117,19 +1117,19 @@ end)
 
 
 RunService.Heartbeat:Connect(function()
-	if getgenv().Psalms.Camera and Plr and Plr.Character and getgenv().Psalms.SelectedPart then
+	if getgenv().Ponchay.Camera and Plr and Plr.Character and getgenv().Ponchay.SelectedPart then
 		local camera = Workspace.CurrentCamera
-		local selectedPart = getgenv().Psalms.SelectedPart
+		local selectedPart = getgenv().Ponchay.SelectedPart
 		local targetPart = Plr.Character[selectedPart]
 
 		if targetPart then
 			local velocity = targetPart.Velocity
-				if getgenv().Psalms.ResolverEnabled then
-					local resolverType = getgenv().Psalms.ResolverType
+				if getgenv().Ponchay.ResolverEnabled then
+					local resolverType = getgenv().Ponchay.ResolverType
 						if resolverType == "Recalculate" then
 							velocity = targetPart.Velocity
 					elseif resolverType == "LookVector" then
-						velocity = targetPart.CFrame.LookVector * getgenv().Psalms.HorizontalPrediction
+						velocity = targetPart.CFrame.LookVector * getgenv().Ponchay.HorizontalPrediction
 					elseif resolverType == "MoveDirection" then
 							velocity = Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed
 					elseif resolverType == "ZeroPrediction" then
@@ -1139,8 +1139,8 @@ RunService.Heartbeat:Connect(function()
 				velocity = targetPart.Velocity
 			end
 
-			local jumpOffset = getgenv().Psalms.jumpoffset or 0
-			local fallOffset = getgenv().Psalms.FallOffset or 0
+			local jumpOffset = getgenv().Ponchay.jumpoffset or 0
+			local fallOffset = getgenv().Ponchay.FallOffset or 0
 
 			local verticalVelocity = velocity.Y
 			local appliedVerticalOffset = 0
@@ -1151,8 +1151,8 @@ RunService.Heartbeat:Connect(function()
 				appliedVerticalOffset = -fallOffset
 			end
 
-			local horizontalPrediction = getgenv().Psalms.HorizontalPrediction
-			local verticalPrediction = getgenv().Psalms.VerticalPrediction
+			local horizontalPrediction = getgenv().Ponchay.HorizontalPrediction
+			local verticalPrediction = getgenv().Ponchay.VerticalPrediction
 
 			local targetPosition = Vector3.new(
 				targetPart.Position.X + (velocity.X * horizontalPrediction),
@@ -1160,7 +1160,7 @@ RunService.Heartbeat:Connect(function()
 				targetPart.Position.Z + (velocity.Z * horizontalPrediction)
 			)
 
-			local smoothness = getgenv().Psalms.smoothness or 0.1 
+			local smoothness = getgenv().Ponchay.smoothness or 0.1 
 			camera.CFrame = camera.CFrame:Lerp(CFrame.new(camera.CFrame.Position, targetPosition), smoothness)
 		end
 	end
@@ -1196,18 +1196,18 @@ local function ApplyAntiGround()
 		local SigmaAir = humanoidRootPart.Position.Y > 2
 
 		if not SigmaAir and velocity.Y < -3 then
-			if getgenv().Psalms.NoGroundShot then
+			if getgenv().Ponchay.NoGroundShot then
 				humanoidRootPart.Velocity = Vector3.new(velocity.X, 0, velocity.Z)
 			end
 		else
-			if not getgenv().Psalms.NoGroundShot then
+			if not getgenv().Ponchay.NoGroundShot then
 				humanoidRootPart.Velocity = Vector3.new(velocity.X, velocity.Y, velocity.Z)
 			end
 		end
 	end
 end
 
-local targetSigm99928 = getgenv().Psalms.ShootDelay 
+local targetSigm99928 = getgenv().Ponchay.ShootDelay 
 local targetSigmaPOBALLs = nil
 
 local function checkTarget()
@@ -1219,7 +1219,7 @@ local function checkTarget()
 			local SigmaAir = humanoid:GetState() == Enum.HumanoidStateType.Freefall or humanoidRootPart.Velocity.Y > 2
 
 
-			if SigmaAir and getgenv().Psalms.AutoAir then
+			if SigmaAir and getgenv().Ponchay.AutoAir then
 				if not targetSigmaPOBALLs then
 
 					targetSigmaPOBALLs = tick()
@@ -1263,7 +1263,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
     LookAtPlayer(Plr)
     checkTarget()
 
-    if Plr and getgenv().Psalms.AutoUnlock then
+    if Plr and getgenv().Ponchay.AutoUnlock then
         local char = Plr.Character
         if char then
             local hum = char:FindFirstChildWhichIsA("Humanoid")
@@ -1320,10 +1320,10 @@ local function IsPlayerInFOV(player)
 		return false
 	end
 
-	if getgenv().Psalms.FriendCheck and LocalPlayer:IsFriendsWith(player) then
+	if getgenv().Ponchay.FriendCheck and LocalPlayer:IsFriendsWith(player) then
 		return false
 	end
-	if getgenv().Psalms.TeamCheck and player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
+	if getgenv().Ponchay.TeamCheck and player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
 		return false
 	end
 
@@ -1345,9 +1345,9 @@ RunService.RenderStepped:Connect(function()
 	FOV.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
 	FOV.Radius = getgenv().FOVSize
 	FOV.Visible = getgenv().ShowFOV
-	targetSigm99928 = getgenv().Psalms.ShootDelay
+	targetSigm99928 = getgenv().Ponchay.ShootDelay
 
-	if getgenv().Psalms.SilentAim then
+	if getgenv().Ponchay.SilentAim then
 		local NiggerLocated = false
 
 		for _, player in ipairs(Players:GetPlayers()) do
@@ -1445,12 +1445,12 @@ RunService.RenderStepped:Connect(function()
 					
 					drawings.Box.Size = Vector2.new(boxWidth, boxHeight)
 					drawings.Box.Position = boxPos
-					drawings.Box.Visible = getgenv().Psalms.BoxESP
+					drawings.Box.Visible = getgenv().Ponchay.BoxESP
 
 					
 					drawings.Name.Text = player.DisplayName
 					drawings.Name.Position = Vector2.new(pos.X, top.Y - 18)
-					drawings.Name.Visible = getgenv().Psalms.NameESP
+					drawings.Name.Visible = getgenv().Ponchay.NameESP
 
 					
 					local hpPercent = hum.Health / hum.MaxHealth
@@ -1462,18 +1462,18 @@ RunService.RenderStepped:Connect(function()
 
 					drawings.HealthBar.Size = Vector2.new(2, boxHeight * hpPercent)
 					drawings.HealthBar.Position = Vector2.new(boxPos.X - 6, boxPos.Y + boxHeight * (1 - hpPercent))
-					drawings.HealthBar.Visible = getgenv().Psalms.HealthESP
+					drawings.HealthBar.Visible = getgenv().Ponchay.HealthESP
 
 					
 					drawings.Tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y)
 					drawings.Tracer.To = Vector2.new(pos.X, pos.Y)
-					drawings.Tracer.Visible = getgenv().Psalms.TracerESP
+					drawings.Tracer.Visible = getgenv().Ponchay.TracerESP
 
 					
 					local dist = math.floor((Camera.CFrame.Position - root.Position).Magnitude / 3.28)
 					drawings.Distance.Text = tostring(dist) .. " studs"
 					drawings.Distance.Position = Vector2.new(pos.X, pos.Y + boxHeight + 2)
-					drawings.Distance.Visible = getgenv().Psalms.DistanceESP
+					drawings.Distance.Visible = getgenv().Ponchay.DistanceESP
 				else
 					hideESP(player)
 				end
@@ -1517,22 +1517,22 @@ local function IsWithinDistance(player)
     local root = char and char:FindFirstChild("HumanoidRootPart")
     local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not (root and myRoot) then return false end
-    return (root.Position - myRoot.Position).Magnitude <= getgenv().Psalms.TriggerDistance
+    return (root.Position - myRoot.Position).Magnitude <= getgenv().Ponchay.TriggerDistance
 end
 
 local function IsInFOV(player)
     local char = player.Character
     if not char then return false end
-    local partName = getgenv().Psalms.SilentSelectedPart
+    local partName = getgenv().Ponchay.SilentSelectedPart
     local part = char:FindFirstChild(partName)
     if part then
-        return PositionTolerance(part.Position, getgenv().Psalms.TriggerFOVSize)
+        return PositionTolerance(part.Position, getgenv().Ponchay.TriggerFOVSize)
     end
     return false
 end
 
 local function WallCheck(targetPart)
-    if not getgenv().Psalms.TriggerWallCheck then return true end
+    if not getgenv().Ponchay.TriggerWallCheck then return true end
     local origin = Camera.CFrame.Position
     local direction = (targetPart.Position - origin)
     local raycastParams = RaycastParams.new()
@@ -1543,7 +1543,7 @@ local function WallCheck(targetPart)
 end
 
 local function KOCheck(player)
-    if not getgenv().Psalms.TriggerKOCheck then return true end
+    if not getgenv().Ponchay.TriggerKOCheck then return true end
     local be = player.Character and player.Character:FindFirstChild("BodyEffects")
     local ko = be and be["K.O"] and be["K.O"].Value
     local grabbed = player.Character and player.Character:FindFirstChild("GRABBING_CONSTRAINT")
@@ -1551,7 +1551,7 @@ local function KOCheck(player)
 end
 
 local function TriggerBot()
-    if not getgenv().Psalms.TriggerEnabled then return end
+    if not getgenv().Ponchay.TriggerEnabled then return end
 
     local char = LocalPlayer.Character
     if not char then return end
@@ -1568,10 +1568,10 @@ local function TriggerBot()
 
         if not WallCheck(root) or not KOCheck(player) then continue end
 
-        if PositionTolerance(root.Position, getgenv().Psalms.TriggerTolerance) then
-            task.wait(getgenv().Psalms.TriggerDelay)
+        if PositionTolerance(root.Position, getgenv().Ponchay.TriggerTolerance) then
+            task.wait(getgenv().Ponchay.TriggerDelay)
             tool:Activate()
-            task.wait(getgenv().Psalms.TriggerTapDelay)
+            task.wait(getgenv().Ponchay.TriggerTapDelay)
         end
     end
 end
@@ -1579,8 +1579,8 @@ end
 
 RunService.RenderStepped:Connect(function()
     fovCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-    fovCircle.Radius = getgenv().Psalms.TriggerFOVSize
-    fovCircle.Visible = getgenv().Psalms.TriggerFOVShow
+    fovCircle.Radius = getgenv().Ponchay.TriggerFOVSize
+    fovCircle.Visible = getgenv().Ponchay.TriggerFOVShow
 end)
 
 
@@ -1616,20 +1616,20 @@ local function GetClosestPart(character)
 end
 RunService.RenderStepped:Connect(function()
     local target = Plr
-    if not target or not target.Character or not getgenv().Psalms.AimTracerEnabled then
+    if not target or not target.Character or not getgenv().Ponchay.AimTracerEnabled then
         aimTracer.Visible = false
         return
     end
 
-    local useClosest = getgenv().Psalms.ClosestPartEnabled
-    local mode = getgenv().Psalms.ClosestPartMode
+    local useClosest = getgenv().Ponchay.ClosestPartEnabled
+    local mode = getgenv().Ponchay.ClosestPartMode
 
     local finalPart = nil
 
     if useClosest then
         finalPart = GetClosestPart(target.Character)
     else
-        local partName = (mode == "Camera") and getgenv().Psalms.SelectedPart or getgenv().Psalms.SilentSelectedPart
+        local partName = (mode == "Camera") and getgenv().Ponchay.SelectedPart or getgenv().Ponchay.SilentSelectedPart
         finalPart = target.Character:FindFirstChild(partName)
     end
 
